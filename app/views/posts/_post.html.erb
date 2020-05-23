@@ -1,4 +1,9 @@
-<span class="content"><%= post.content %></span>
-<span class="timestamp">
+<div>・<%= Post.human_attribute_name(:content) %></div>
+<div class="content">
+  <%= post.content %>
+</div>
+
+<div class="mt-3">・<%= Post.human_attribute_name(:created_at) %></div>
+<div class="timestamp mb-5">
   Posted <%= time_ago_in_words(post.created_at) %> ago.
-</span>
+</div>
