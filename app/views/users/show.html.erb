@@ -1,0 +1,8 @@
+<h1 class="mt-5">マイページ</h1>
+
+<div><%= User.human_attribute_name(:name) %></div>
+<div class="mb-5"><%= @user.name %></div>
+
+<% @posts.each do |post| %>
+  <%= render partial: 'posts/post', locals: { post: post } %>
+<% end %>
