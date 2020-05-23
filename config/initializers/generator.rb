@@ -3,5 +3,5 @@ Rails.application.config.generators do |g|
   g.assets false
   g.template_engine :erb
   g.skip_routes true
-  g.test_flamework false
+  g.test_framework false
 end
