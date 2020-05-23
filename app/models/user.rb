@@ -8,6 +8,15 @@ class User < ApplicationRecord
   validates :name,  presence: true,
                     length: { maximum: 30 }
 
+
+  # スコープ
+  scope :exclude_inactive, -> {
+    where.not(reception_status: 'inactive')
+    where(id:           params[:sort_id].to_sym)              if params[:sort_id].present?
+  }
+
+
+  # メソッド
   def self.guest
     find_or_create_by!(name: 'ゲストユーザー', email: 'guest@example.com') do |user|
       user.password = SecureRandom.urlsafe_base64

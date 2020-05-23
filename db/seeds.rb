@@ -11,5 +11,6 @@ end
 users = User.order(:created_at).first(10)
 20.times do |n|
   content = "サンプル内容#{n+1}"
-  users.each { |user| user.posts.create!(content: content) }
+  category = Post.category.values.sample
+  users.each { |user| user.posts.create!(content: content, category: category) }
 end

@@ -1,7 +1,8 @@
 class CreatePosts < ActiveRecord::Migration[5.2]
   def up
     create_table :posts do |t|
-      t.text :content
+      t.text       :content
+      t.string     :category, null: false
       t.references :user, foreign_key: true
 
       t.timestamps

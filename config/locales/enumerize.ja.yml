@@ -1,0 +1,9 @@
+ja:
+  enumerize:
+    post:
+      category:
+        programming: 'プログラミング'
+        university: '大学受験'
+        qualification: '資格勉強'
+        english: '英語学習'
+        reading: '読書'
