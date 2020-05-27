@@ -32,6 +32,8 @@ end
 
 gem 'simple_form'
 gem 'devise'
+gem 'kaminari'
+gem 'kaminari-bootstrap'
 gem 'enumerize'
 gem 'pry-rails'
 

@@ -10,10 +10,7 @@ class User < ApplicationRecord
 
 
   # スコープ
-  scope :exclude_inactive, -> {
-    where.not(reception_status: 'inactive')
-    where(id:           params[:sort_id].to_sym)              if params[:sort_id].present?
-  }
+  scope :where_category, ->(category) { where(posts: { category: category }) }
 
 
   # メソッド

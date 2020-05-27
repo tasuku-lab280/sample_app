@@ -1,35 +1,74 @@
+<!-- breadcrumb -->
+<nav aria-label="パンくずリスト">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'ホーム', root_path %></li>
+    <li class="breadcrumb-item active" aria-current="page">会員一覧</li>
+  </ol>
+</nav>
+<!-- end breadcrumb -->
+
+
+<!-- tab -->
+<% tabs = [['全て', nil]] + Post.category.options  %>
+<nav class="navbar navbar-expand-md navbar-light bg-light justify-content-around">
+  <ul class="navbar-nav d-flex">
+    <% tabs.each do |label, value| %>
+      <li class="nav-item <%= 'active' if value == params[:category] %>">
+        <%= link_to label, users_path(category: value), class: 'nav-link' %>
+      </li>
+    <% end %>
+  </ul>
+</nav>
+<!-- end tab -->
+
+
 <h1 class="mt-5">会員一覧</h1>
 
-<%= form_tag users_path, method: :get do %>
-<%= hidden_field_tag :category, params[:category] %>
-  <div class="d-flex justify-content-between">
-    <div class="<%= params[:category] == 'all' ? 'bg-success' : 'bg-secondary' %> p-3">
-      <%= link_to '全て', users_path(category: 'all') %>
-    </div>
-    <div class="<%= params[:category] == 'programming' ? 'bg-success' : 'bg-secondary' %> p-3">
-      <%= link_to 'プログラミング', users_path(category: 'programming') %>
-    </div>
-    <div class="<%= params[:category] == 'university' ? 'bg-success' : 'bg-secondary' %> p-3">
-      <%= link_to '大学受験', users_path(category: 'university') %>
-    </div>
-    <div class="<%= params[:category] == 'qualification' ? 'bg-success' : 'bg-secondary' %> p-3">
-      <%= link_to '資格勉強', users_path(category: 'qualification') %>
-    </div>
-    <div class="<%= params[:category] == 'english' ? 'bg-success' : 'bg-secondary' %> p-3">
-      <%= link_to '英語学習', users_path(category: 'english') %>
-    </div>
-    <div class="<%= params[:category] == 'reading' ? 'bg-success' : 'bg-secondary' %> p-3">
-      <%= link_to '読書', users_path(category: 'reading') %>
-    </div>
+
+<!-- title -->
+<div class="container-fluid">
+  <div class="mt-5">
+    <h2 class="ml-5"><%= tabs.select{ |label, value| value == params[:category] }.first[0]  %></h2>
   </div>
-<% end %>
+</div>
+<!-- end title -->
 
-<% @users.each do |user| %>
-  <div class="my-4 bg-primary"><%= user.name %></div>
 
-  <% category = params[:category] %>
-  <% user.posts.category_filter(category).each do |post| %>
-    <div><%= post.category_text %></div>
-    <div class="mb-3"><%= post.content %></div>
-  <% end %>
-<% end %>
+<!-- result1 -->
+<%
+  result_from = (@users.current_page - 1)*@users.limit_value + 1
+  result_to = @users.current_page*@users.limit_value
+  result_total = @users.total_count
+%>
+
+<div class="container">
+  <div class="text-center">
+    <%= result_from %>〜<%= result_to  %>件目を表示（<%= result_total %>件中）
+  </div>
+</div>
+<!-- end result1 -->
+
+
+<!-- users -->
+<div class="container-fluid">
+  <div class="row">
+    <%= render @users %>
+  </div>
+</div>
+<!-- end users -->
+
+
+<!-- result2 -->
+<div class="container mt-5">
+  <div class="text-center">
+    <%= result_from %>〜<%= result_to  %>件目を表示（<%= result_total %>件中）
+  </div>
+</div>
+<!-- end result2 -->
+
+
+<!-- paginate -->
+<div class="d-flex justify-content-center mt-3">
+  <%= paginate @users, category: @category %>
+</div>
+<!-- end paginate -->
