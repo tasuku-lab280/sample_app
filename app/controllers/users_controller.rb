@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # 定数
-  INDEX_PER_POSTS = 5
+  INDEX_PER_POSTS = 10
 
 
   def index

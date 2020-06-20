@@ -1,25 +1,27 @@
-<div class="col-sm-3 col-xs-12">
+<div class="col-md-6 p-3">
 
-  <div class="row">
+  <div class="border">
 
-    <div class="col-xs-12">
+    <h3 class="text-center my-4"><%= user.name %></h3>
 
-      <%= link_to '#' do %>
+    <div class="row">
 
-        <div class="service mt-5 js-service block-center" style="border: solid 1px #6F6F6F">
+      <% posts =  if params[:category].present?
+                    user.posts.with_category(params[:category]).limit(4).order(created_at: :desc)
+                  else
+                    user.posts.limit(4).order(created_at: :desc)
+                  end
+      %>
 
-          <div class="thumbnail">
-          </div>
+      <% posts.each do |post| %>
 
-          <h3 class="text-center px-4"><%= user.name %></h3>
+        <div class="col-md-6">
 
-          <% user.posts.each do |post| %>
-            <div><%= post.category_text %></div>
-            <div class="mb-3"><%= post.content %></div>
-          <% end %>
+          <div><%= post.category_text %></div>
+          <div class="mb-3"><%= post.content %></div>
 
         </div>
-
+        
       <% end %>
 
     </div>
