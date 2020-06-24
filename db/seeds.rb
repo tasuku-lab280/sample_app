@@ -15,21 +15,24 @@ users = User.order(:created_at).first(10)
   users.each { |user| user.posts.create!(content: content, category: category) }
 end
 
-# 作成するユーザー・メッセージの個数
-message_count = 3
-
-ApplicationRecord.transaction do
-  # メッセージを全消去した上で，サンプルメッセージを作成。メッセージを作成したユーザーはランダムに決定する
-  ChatMessage.destroy_all
-  user_ids = User.ids
-  message_list = []
-  message_count.times do |n|
-    user_id = user_ids.sample
-    line_count = rand(1..4)
-    # Fakerで１〜４行のランダムメッセージを作成
-    content = Faker::Lorem.paragraphs(number: line_count).join("\n")
-    message_list << { user_id: user_id, content: content }
-  end
-  ChatMessage.create!(message_list)
+ChatRoom.create!(
+  name: "チャットルーム1"
+)
+  
+1.upto(3) do |n|
+  ChatUser.create!(
+    chat_room_id: 1,
+    user_id: n
+  )
 end
+
+line_count = rand(1..4)
+1.upto(20) do |n|
+  ChatMessage.create!(
+    chat_room_id: 1,
+    user_id: rand(1..3),
+    content: Faker::Lorem.paragraphs(number: line_count).join("\n")
+  )
+end
+
 puts '初期データの追加が完了しました！'

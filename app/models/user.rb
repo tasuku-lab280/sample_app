@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_many :posts, dependent: :destroy
-  has_many :chat_messages, dependent: :destroy
+  has_many :chat_messages, dependent: :nullify
+  has_many :chat_users, dependent: :nullify
+  has_many :chat_rooms, through: :chat_users
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

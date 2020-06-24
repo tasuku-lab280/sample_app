@@ -1,0 +1,45 @@
+<div class="container">
+  <!-- breadcrumb -->
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'ホーム', root_path %></li>
+    <li class="breadcrumb-item">チャットルーム一覧</li>
+  </ul>
+  <!-- end breadcrumb -->
+
+
+  <!-- title -->
+  <div class="d-flex justify-content-between">
+    <h1>チャットルーム一覧</h1>
+    <div>
+      <%= link_to 'チャットルーム作成', new_chat_room_path, class: 'btn btn-primary navbar-btn' %>
+    </div>
+  </div>
+  <!-- end title -->
+
+  <hr>
+
+  <!-- chat_rooms -->
+  <% if @chat_rooms.count.zero? %>
+    まだチャットルームは、ありません。
+  <% end %>
+  <%= render partial: 'chat_room', collection: @chat_rooms %>
+  <!-- end chat_rooms -->
+
+
+  <!-- result1 -->
+  <%
+    result_from = (@chat_rooms.current_page - 1)*@chat_rooms.limit_value + 1
+    result_to = @chat_rooms.current_page*@chat_rooms.limit_value
+    result_total = @chat_rooms.total_count
+  %>
+
+  <div class="text-center mt-5 mb-3">
+    <%= result_from %>〜<%= result_to  %>件目を表示（<%= result_total %>件中）
+  </div>
+  <!-- end result1 -->
+
+
+  <!-- paginate -->
+  <%= paginate @chat_rooms %>
+  <!-- end paginate -->
+</div>
