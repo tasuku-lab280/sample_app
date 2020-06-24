@@ -1,6 +1,7 @@
 class ChatMessagesController < ApplicationController
   def create
     @chat_message = current_user.chat_messages.create!(chat_message_params)
+    ActionCable.server.broadcast 'chat_room_channel', chat_message: @chat_message.template
   end
 
   private

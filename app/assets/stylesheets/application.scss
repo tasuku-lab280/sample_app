@@ -1,4 +1,9 @@
-@import "bootstrap";
+/*
+*= require_tree .
+*= require_self
+*/
+
+@import "bootstrap/scss/bootstrap";
 
 // ログイン画面
 
@@ -31,4 +36,15 @@ footer {
   padding: 1rem;
   margin: 0 auto;
   background-color: white;
+}
+
+.btn-primary.disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  cursor: auto;
+}
+
+// ユーザーがフォームサイズを自由に変更できる機能を停止させておく
+#chat_message_content {
+  resize: none;
 }
