@@ -1,1 +1,9 @@
 <%= render 'shared/flash_messages' %>
+
+<%= select_tag('animal', options_for_select([['いぬ', 'dog'], ['ねこ', 'cat'], ['とり', 'bird'], ['うし', 'cow'], ['へび', 'snake']]), class: "form-control", multiple: true) %>
+
+<script>
+$(function () {
+  $('#animal').select2();
+});
+</script>

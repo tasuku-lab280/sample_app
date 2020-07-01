@@ -11,6 +11,9 @@ class ChatRoomsController < ApplicationController
     @chat_room = ChatRoom.new
     @chat_room.chat_users.build
     @users = User.all
+
+    @search_users = User.none
+    @search_users = User.search(params[:keyword]) if params[:keyword].present?
   end
 
   def create

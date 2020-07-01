@@ -11,7 +11,7 @@
   <div class="d-flex justify-content-between">
     <h1>チャットルーム一覧</h1>
     <div>
-      <%= link_to 'チャットルーム作成', new_chat_room_path, class: 'btn btn-primary navbar-btn' %>
+      <div class="btn btn-primary" id="createBtn">チャットルーム作成</div>
     </div>
   </div>
   <!-- end title -->
@@ -43,3 +43,28 @@
   <%= paginate @chat_rooms %>
   <!-- end paginate -->
 </div>
+
+<!-- modal -->
+<%= render partial: 'create_chat_room_modal' %>
+<!-- end modal -->
+
+<script>
+var btn = document.getElementById('createBtn');
+var modal = document.getElementById('modal');
+
+btn.addEventListener('click', function() {
+  modal.style.display = 'block';
+})
+
+var closeBtn = document.getElementById('closeBtn');
+
+closeBtn.addEventListener('click', function() {
+  modal.style.display = 'none';
+})
+
+window.addEventListener('click', function(e) {
+  if (e.target == modal) {
+    modal.style.display = 'none';
+  }
+});
+</script>
