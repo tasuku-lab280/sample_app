@@ -38,6 +38,7 @@ gem 'kaminari-bootstrap'
 gem 'enumerize'
 gem 'pry-rails'
 gem 'faker'
+gem 'select2-rails'
 
 # 日本語化
 gem 'rails-i18n', '~> 6.0'

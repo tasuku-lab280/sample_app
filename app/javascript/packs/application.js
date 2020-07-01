@@ -17,6 +17,3 @@
 
 console.log('Hello World from Webpacker')
 require("bootstrap/dist/js/bootstrap")
-require("jquery")
-import 'bootstrap';
-import '../stylesheets/application';

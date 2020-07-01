@@ -1,22 +1,15 @@
 <!-- modal -->
 <div id="modal" class="modal">
   <div class="modal-content p-5">
-    <%= form_with(model: ChatRoom.new, local: true) do |f| %>
-      <div class="form-group">
-        <%= f.label :name %>
-        <%= f.text_field :name, class: 'form-control' %>
-      </div>
+    <%= simple_form_for ChatRoom.new do |f| %>
 
-      <%= f.fields_for :chat_user do |ff|%>
-        <% options = options_from_collection_for_select(User.all, :id, :name) %>
-        <div class="form-group">
-          <%= ff.select :user_id, options, id: 'js-searchable' %>
-        </div>
-      <%end%>
+      <%= f.input :name %>
 
-      <div class="form-group">
+      <%= f.fields_for :chat_user do |ff| %>
+        <%= ff.input :user_id, collection: User.all, include_blank: false, input_html: { multiple: true, class: 'js-searchable' } %>
+      <% end %>
+
         <%= f.submit 'チャットルーム作成する', class: 'btn btn-primary btn-block' %>
-      </div>
     <% end %>
 
     <div class="modal-body">
