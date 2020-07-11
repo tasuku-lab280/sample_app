@@ -1,15 +1,18 @@
 <!-- modal -->
 <div id="modal" class="modal">
   <div class="modal-content p-5">
-    <%= simple_form_for ChatRoom.new do |f| %>
-
+    
+    <%= simple_form_for @chat_room do |f| %>
       <%= f.input :name %>
 
-      <%= f.fields_for :chat_user do |ff| %>
-        <%= ff.input :user_id, collection: User.all, include_blank: false, input_html: { multiple: true, class: 'js-searchable' } %>
-      <% end %>
+      <div>
+        <%= f.collection_check_boxes :user_ids, User.all, :id, :name %>
+      </div>
 
-        <%= f.submit 'チャットルーム作成する', class: 'btn btn-primary btn-block' %>
+      <%= text_field_tag :keyword, '', placeholder: '検索', class: 'form-control mt-5', id: 'search-input' %>
+      <div class="border rounded my-3 p-3" id="result"></div>
+
+      <%= f.submit 'チャットルーム作成する', class: 'btn btn-primary btn-block' %>
     <% end %>
 
     <div class="modal-body">
@@ -19,3 +22,31 @@
   </div>
 </div>
 <!-- end modal -->
+
+<script>
+$(document).on('turbolinks:load', function(){
+  $(document).on('keyup', '#search-input', function(e){
+    e.preventDefault();
+    var input = $.trim($(this).val());
+    $.ajax({
+      url: '/chat_rooms/search',
+      type: 'GET',
+      data: ('keyword=' + input),
+      processData: false,
+      contentType: false,
+      dataType: 'json'
+    })
+
+    .done(function(data){
+      $('#result').find('div').remove();
+      $(data).each(function(i, user){
+        $('#result').append('<div>' + user.name + '</div>')
+      });
+    })
+
+    .fail(function() {
+      console.log("失敗です");
+    });
+  });
+});
+</script>

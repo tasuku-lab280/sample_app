@@ -25,7 +25,6 @@ class User < ApplicationRecord
   end
 
   def self.search(search)
-    return unless search
     User.where('name LIKE(?)', "%#{search}%")
   end
 end
