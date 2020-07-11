@@ -5,8 +5,23 @@
     <%= simple_form_for @chat_room do |f| %>
       <%= f.input :name %>
 
-      <div>
-        <%= f.collection_check_boxes :user_ids, User.all, :id, :name %>
+      <div class="js-add-user" id="chat-group-users">
+        <input name="group[user_ids][]" type="hidden" value="<%= current_user.id %>">
+        <%= current_user.name %>
+      </div>
+
+      <div class="d-flex ml-3 chat-group-user js-chat-member">
+        <% @chat_room.users.each do |user| %>
+          <% if current_user.name != user.name %>
+            <div class="d-flex">
+              <%= f.hidden_field :user_ids, value: user.id %>
+              <div><%= user.name %></div>
+              <div>
+                <a class="user-search-remove chat-group-user__btn chat-group-user__btn--remove js-remove-btn btn btn-danger">削除</a>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       </div>
 
       <%= text_field_tag :keyword, '', placeholder: '検索', class: 'form-control mt-5', id: 'search-input' %>
@@ -38,15 +53,68 @@ $(document).on('turbolinks:load', function(){
     })
 
     .done(function(data){
-      $('#result').find('div').remove();
-      $(data).each(function(i, user){
-        $('#result').append('<div>' + user.name + '</div>')
-      });
+      $('#result').empty();
+      if (input.length == 0) {
+        $('#result').empty();
+      } else if (data.length !== 0) {
+        $(data).each(function(i, user){
+          addUser(user);
+        });
+      } else {
+        addNoUser();
+      }
     })
 
     .fail(function() {
-      console.log("失敗です");
+      alert("通信エラーです。ユーザーが表示できません。");
     });
+  });
+
+  function addUser(user) {
+    let html = `
+      <div class="d-flex my-4">
+        <div class="chat-group-user__name">${user.name}</div>
+        <div class="btn btn-primary ml-3" id="user-add" data-user-id="${user.id}" data-user-name="${user.name}">追加</div>
+      </div>
+    `;
+
+    $("#result").append(html);
+  }
+
+  function addNoUser() {
+    let html = `
+      <p>ユーザーが見つかりません</p>
+    `;
+
+    $("#result").append(html);
+  }
+
+  function addDeleteUser(name, id) {
+    let html = `
+    <div class="chat-group-user clearfix" id="${id}">
+      <p class="chat-group-user__name">${name}</p>
+      <div class="user-search-remove chat-group-user__btn chat-group-user__btn--remove js-remove-btn" data-user-id="${id}" data-user-name="${name}">削除</div>
+    </div>`;
+
+    $(".js-add-user").append(html);
+  }
+
+  function addMember(userId) {
+    let html = `<input value="${userId}" name="chat_rooms[user_ids][]" type="hidden" id="chat_user_ids_${userId}" />`;
+    $(`#${userId}`).append(html);
+  }
+
+  $(document).on("click", "#user-add", function() {
+  
+    const userId = $(this).attr("data-user-id");
+    const userName = $(this).attr("data-user-name");
+
+    $(this).parent().remove();
+
+    // メンバーの追加(function addDeleteUser(name, id) の呼び出し)
+    addDeleteUser(userName, userId);
+    // メンバーの追加(function addMember(userId)の呼び出し)
+    addMember(userId);
   });
 });
 </script>

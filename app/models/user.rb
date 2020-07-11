@@ -24,7 +24,7 @@ class User < ApplicationRecord
     end
   end
 
-  def self.search(search)
-    User.where('name LIKE(?)', "%#{search}%")
+  def self.search(search, current_user)
+    User.where.not(id: current_user.id).where('name LIKE(?)', "%#{search}%")
   end
 end

@@ -37,7 +37,7 @@ class ChatRoomsController < ApplicationController
   end
 
   def search
-    @users = User.search(params[:keyword])
+    @users = User.search(params[:keyword], current_user)
     render json: @users
   end
 
