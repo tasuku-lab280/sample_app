@@ -5,6 +5,7 @@ class ChatRoomsController < ApplicationController
   def index
     @chat_rooms = current_user.chat_rooms
                   .page(params[:page]).per(params[:per_page] || INDEX_PER_CHAT_ROOMS)
+                  .order(created_at: :desc)
     @chat_room = ChatRoom.new
     @chat_room.users << current_user
 

@@ -63,11 +63,21 @@ footer {
   width: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
-  }
+}
   
-  .modal-content {
+.modal-content {
   background-color: white;
-  width: 800px;
-  margin: 100px auto;
+  width: 600px;
+  margin: 30px auto;
   border-radius: 10px;
-  }
+}
+
+.search-result {
+  height: 350px;
+  overflow: scroll;
+}
+
+.added-user-item {
+  background-color: #afeeee;
+  border-radius: 5px;;
+}

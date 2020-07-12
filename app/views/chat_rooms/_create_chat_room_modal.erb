@@ -1,39 +1,39 @@
 <!-- modal -->
 <div id="modal" class="modal">
-  <div class="modal-content p-5">
+  <div class="modal-content px-5 py-2">
+
+    <div class="ml-auto"><a id="closeBtn">✖︎</a></div>
     
     <%= simple_form_for @chat_room do |f| %>
-      <%= f.input :name %>
-
-      <div class="js-add-user" id="chat-group-users">
-        <input name="group[user_ids][]" type="hidden" value="<%= current_user.id %>">
-        <%= current_user.name %>
+      <div class="form-group row">
+        <div class="col-md-8">
+          <%= f.input :name, placeholder: 'チャットルームの名前', label: false %>
+        </div>
+        <div class="col-md-4">
+          <%= f.submit '作成する', class: 'btn btn-primary mb-3' %>
+        </div>
       </div>
 
-      <div class="d-flex ml-3 chat-group-user js-chat-member">
-        <% @chat_room.users.each do |user| %>
-          <% if current_user.name != user.name %>
-            <div class="d-flex">
-              <%= f.hidden_field :user_ids, value: user.id %>
-              <div><%= user.name %></div>
-              <div>
-                <a class="user-search-remove chat-group-user__btn chat-group-user__btn--remove js-remove-btn btn btn-danger">削除</a>
-              </div>
-            </div>
-          <% end %>
+      <label>チャットルームに参加するユーザー</label>
+      <div class="d-flex align-items-start flex-wrap border rounded p-3" id="added-user-list">
+        <div class="added-user-item mb-2 mr-2 p-1">
+          <input value="<%= current_user.id %>" name="chat_room[user_ids][]" type="hidden" id="chat_user_ids_<%= current_user.id %>" />
+          <%= current_user.name %>
+        </div>
+      </div>
+
+      <%= text_field_tag :keyword, '', placeholder: 'ユーザーを検索する', class: 'form-control mt-4', id: 'search-input' %>
+      <div class="search-result my-3 p-3" id="result">
+        <% User.where.not(id: current_user.id).each do |user| %>
+          <div class="d-flex border-top py-3">
+            <div class="my-auto"><%= user.name %></div>
+            <div class="btn btn-primary btn-sm ml-3" id="user-add" data-user-id="<%= user.id %>" data-user-name="<%= user.name %>">追加</div>
+          </div>
         <% end %>
       </div>
 
-      <%= text_field_tag :keyword, '', placeholder: '検索', class: 'form-control mt-5', id: 'search-input' %>
-      <div class="border rounded my-3 p-3" id="result"></div>
-
-      <%= f.submit 'チャットルーム作成する', class: 'btn btn-primary btn-block' %>
     <% end %>
 
-    <div class="modal-body">
-      <h1>hello</h1>
-      <input type="button" id="closeBtn" value="close">
-    </div>
   </div>
 </div>
 <!-- end modal -->
@@ -72,9 +72,9 @@ $(document).on('turbolinks:load', function(){
 
   function addUser(user) {
     let html = `
-      <div class="d-flex my-4">
-        <div class="chat-group-user__name">${user.name}</div>
-        <div class="btn btn-primary ml-3" id="user-add" data-user-id="${user.id}" data-user-name="${user.name}">追加</div>
+      <div class="d-flex border-top py-3">
+        <div class="my-auto">${user.name}</div>
+        <div class="btn btn-primary btn-sm ml-3" id="user-add" data-user-id="${user.id}" data-user-name="${user.name}">追加</div>
       </div>
     `;
 
@@ -91,30 +91,31 @@ $(document).on('turbolinks:load', function(){
 
   function addDeleteUser(name, id) {
     let html = `
-    <div class="chat-group-user clearfix" id="${id}">
-      <p class="chat-group-user__name">${name}</p>
-      <div class="user-search-remove chat-group-user__btn chat-group-user__btn--remove js-remove-btn" data-user-id="${id}" data-user-name="${name}">削除</div>
+    <div class="added-user-item d-flex mr-2 mb-2 p-1" id="${id}">
+      <div class="my-auto">${name}</div>
+      <div class="batsu mx-1" id="user-remove" data-user-id="${id}" data-user-name="${name}">×</div>
     </div>`;
 
-    $(".js-add-user").append(html);
+    $("#added-user-list").append(html);
   }
 
   function addMember(userId) {
-    let html = `<input value="${userId}" name="chat_rooms[user_ids][]" type="hidden" id="chat_user_ids_${userId}" />`;
+    let html = `<input value="${userId}" name="chat_room[user_ids][]" type="hidden" id="chat_user_ids_${userId}" />`;
     $(`#${userId}`).append(html);
   }
 
   $(document).on("click", "#user-add", function() {
-  
     const userId = $(this).attr("data-user-id");
     const userName = $(this).attr("data-user-name");
 
     $(this).parent().remove();
 
-    // メンバーの追加(function addDeleteUser(name, id) の呼び出し)
     addDeleteUser(userName, userId);
-    // メンバーの追加(function addMember(userId)の呼び出し)
     addMember(userId);
+  });
+
+  $(document).on("click", "#user-remove", function() {
+    $(this).parent().remove();
   });
 });
 </script>
