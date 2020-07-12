@@ -5,6 +5,7 @@
     <div class="ml-auto"><a id="closeBtn">✖︎</a></div>
     
     <%= simple_form_for @chat_room do |f| %>
+
       <div class="form-group row">
         <div class="col-md-8">
           <%= f.input :name, placeholder: 'チャットルームの名前', label: false %>
@@ -14,7 +15,7 @@
         </div>
       </div>
 
-      <label>チャットルームに参加するユーザー</label>
+      <div>チャットルームに参加するユーザー</div>
       <div class="d-flex align-items-start flex-wrap border rounded p-3" id="added-user-list">
         <div class="added-user-item mb-2 mr-2 p-1">
           <input value="<%= current_user.id %>" name="chat_room[user_ids][]" type="hidden" id="chat_user_ids_<%= current_user.id %>" />

@@ -8,17 +8,6 @@ class ChatRoomsController < ApplicationController
                   .order(created_at: :desc)
     @chat_room = ChatRoom.new
     @chat_room.users << current_user
-
-    # return nil if params[:keyword] == ""
-    # @users = User.search(params[:keyword], current_user.id)
-
-    # respond_to do |format|
-    #   format.html
-    #   format.json
-    # end
-  end
-
-  def new
   end
 
   def create
