@@ -10,4 +10,13 @@ class Api::ChatMessagesController < ApplicationController
     .order(created_at: :desc)
     render json: chat_message
   end
+
+  def destroy
+    chat_message = ChatMessage.find(params[:id])
+    if chat_message.destroy
+      head :no_content, status: :ok
+    else
+      render json: chat_message.errors, status: :unprocessable_entity
+    end
+  end
 end
