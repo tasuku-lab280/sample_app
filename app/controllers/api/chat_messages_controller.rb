@@ -1,5 +1,7 @@
 class Api::ChatMessagesController < ApplicationController
   before_action :set_post, only: [:show, :update, :destroy]
+  # https://qiita.com/rh_/items/7a0258374af0727e5343 あとで調べる
+  protect_from_forgery with: :null_session
   
   def index
     chat_message = ChatMessage.joins(:user)
@@ -14,7 +16,7 @@ class Api::ChatMessagesController < ApplicationController
   end
 
   def create
-    chat_message = ChatMessage.new(post_params)
+    chat_message = ChatMessage.new(chat_message_params)
     if chat_message.save
       render json: { status: 'SUCCESS', data: chat_message }
     else
