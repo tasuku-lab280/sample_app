@@ -1,4 +1,6 @@
 class Api::ChatMessagesController < ApplicationController
+  before_action :set_post, only: [:show, :update, :destroy]
+  
   def index
     chat_message = ChatMessage.joins(:user)
     .select("
@@ -11,12 +13,27 @@ class Api::ChatMessagesController < ApplicationController
     render json: chat_message
   end
 
-  def destroy
-    chat_message = ChatMessage.find(params[:id])
-    if chat_message.destroy
-      head :no_content, status: :ok
+  def create
+    chat_message = ChatMessage.new(post_params)
+    if chat_message.save
+      render json: { status: 'SUCCESS', data: chat_message }
     else
-      render json: chat_message.errors, status: :unprocessable_entity
+      render json: { status: 'ERROR', data: chat_message.errors }
     end
+  end
+
+  def destroy
+    @chat_message.destroy
+    render json: { status: 'SUCCESS', message: 'Deleted the post', data: @chat_message }
+  end
+
+  private
+
+  def set_chat_message
+    @chat_message = ChatMessage.find(params[:id])
+  end
+
+  def chat_message_params
+    params.require(:chat_message).permit(:chat_room_id, :user_id, :content)
   end
 end
