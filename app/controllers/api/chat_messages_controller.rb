@@ -11,7 +11,6 @@ class Api::ChatMessagesController < ApplicationController
       chat_messages.user_id,
       users.name AS user_name
       ")
-    .order(created_at: :desc)
     render json: chat_message
   end
 
