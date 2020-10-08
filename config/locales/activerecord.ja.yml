@@ -1,8 +1,20 @@
 ja:
   activerecord:
+    models:
+      user: "会員"
+      post: "投稿"
+      item: "商品"
+
     attributes:
       user:
-        name: 'ユーザー名'
+        name: "ユーザー名"
       post:
-        content: '内容'
-        created_at: '投稿日時'
+        content: "内容"
+        created_at: "投稿日時"
+      item:
+        name: "商品名"
+        body: "本文"
+        price: "価格"
+        condition: "商品の状態"
+        image: "画像"
+        note: "備考"
