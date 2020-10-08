@@ -20,4 +20,6 @@ Rails.application.routes.draw do
     resources :posts
     resources :chat_messages
   end
+
+  resources :items
 end

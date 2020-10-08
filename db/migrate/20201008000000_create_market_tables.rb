@@ -6,7 +6,7 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
       t.string            :name,             null: false
       t.text              :body,             null: false
       t.integer           :price,            null: false
-      t.integer           :condition,        null: false
+      t.string            :condition,        null: false
       t.string            :image
       t.text              :note
       t.timestamps                           null: false

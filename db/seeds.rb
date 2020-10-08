@@ -35,4 +35,17 @@ line_count = rand(1..4)
   )
 end
 
+# 商品
+User.where(id: [1, 2]).each do |user|
+  items = (1..10).map do |i|
+    {
+      name: "サンプル商品#{i+1}",
+      body: "サンプル本文#{i+1}",
+      price: i * 1000,
+      condition: Item.condition.values.sample,
+    }
+  end
+  user.items.create!(items)
+end
+
 puts '初期データの追加が完了しました！'

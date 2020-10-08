@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.string "name", null: false
     t.text "body", null: false
     t.integer "price", null: false
-    t.integer "condition", null: false
+    t.string "condition", null: false
     t.string "image"
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
