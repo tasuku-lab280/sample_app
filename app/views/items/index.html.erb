@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-sm-4 bg-primary">
+    3つの列の1列目<br>
+    .col-sm-3
+  </div>
+  <div class="col-sm-8">
+
+    <!-- result -->
+    <%
+      result_from = (@items.current_page - 1)*@items.limit_value + 1
+      result_to = @items.last_page? ? @items.total_count : @items.current_page*@items.limit_value
+      result_total = @items.total_count
+    %>
+
+    <div class="mb-3 text-left">
+      <%= result_from %>〜<%= result_to  %>件目を表示（<%= result_total %>件中）
+    </div>
+    <!-- end result -->
+
+    <div class="row">
+      <%= render partial: 'item', collection: @items %>
+    </div>
+
+    <!-- paginate -->
+    <%= paginate @items %>
+    <!-- end paginate -->
+
+  </div>
+</div>
