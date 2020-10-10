@@ -1,8 +1,5 @@
-<div class="row">
-  <div class="col-sm-4 bg-primary">
-    3つの列の1列目<br>
-    .col-sm-3
-  </div>
+<div class="row mt-5">
+  <%= render 'item_filter' %>
   <div class="col-sm-8">
 
     <!-- result -->
@@ -13,7 +10,7 @@
     %>
 
     <div class="mb-3 text-left">
-      <%= result_from %>〜<%= result_to  %>件目を表示（<%= result_total %>件中）
+      <%= result_from %>〜<%= result_to  %>件表示（<%= result_total %>件中）
     </div>
     <!-- end result -->
 

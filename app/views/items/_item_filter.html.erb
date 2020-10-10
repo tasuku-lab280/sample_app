@@ -1,0 +1,77 @@
+<div class="col-sm-4 px-5">
+
+  <%= form_with url: items_path, method: "get", class: 'form-group', local: true do |f| %>
+    <% order_options = [ 
+        ['並び替え'],
+        ['価格の安い順', 'price_asc'],
+        ['価格の高い順', 'price_desc'],
+        ['出品の新しい順', 'created_desc'],
+        ['いいねの多い順', 'like_desc'],
+      ] 
+    %>
+    <%= f.select :sort_order, order_options, {}, class: 'form-control' %>
+    <%= f.submit '適用', class: "btn btn-primary btn-sm mt-2" %>
+  <% end %>
+
+  <div class="rounded p-3" style="background-color: #FFFFFF;">
+    <p class="font-weight-bold">詳細検索</p>
+
+    <div class="form-group">
+      <span class="font-weight-bold small">キーワードを追加する</span>
+      <input class="form-control">
+    </div>
+
+    <div class="form-group mt-4">
+      <span class="font-weight-bold small">カテゴリを選択する</span>
+      <select class="form-control">
+        <option>全て</option>
+        <option>本</option>
+        <option>家電</option>
+        <option>自転車</option>
+      </select>
+    </div>
+
+    <div class="form-group mt-4">
+      <span class="font-weight-bold small">ブランド名から探す</span>
+      <input class="form-control" placeholder="例) シャネル">
+    </div>
+
+    <div class="form-group mt-4">
+      <span class="font-weight-bold small">サイズを選択する</span>
+      <select class="form-control">
+        <option>全て</option>
+      </select>
+    </div>
+
+    <div class="form-group mt-4">
+      <span class="font-weight-bold small">価格</span>
+      <select class="form-control">
+        <option>選択して下さい</option>
+      </select>
+    </div>
+
+    <div class="form-check mt-4">
+      <span class="font-weight-bold small">商品の状態</span>
+      <div>
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          すべて
+        </label>
+      </div>
+      <div>
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          新品、未使用
+        </label>
+      </div>
+      <div>
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          未使用に近い
+        </label>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -9,13 +9,34 @@ class ItemsController < ApplicationController
 
   # メソッド
   def index
-    @items = Item.page(params[:page]).per(params[:per_page] || INDEX_PER_ITEMS)
-             .order(created_at: :desc)
+    one = search_items
+    @items = one.page(params[:page]).per(params[:per_page] || INDEX_PER_ITEMS)
+  end
+
+  def new
+    @item = Item.new
+  end
+
+  def create
+    @item = current_user.items.new(item_params)
+    if @item.save
+      redirect_to items_path, notice: '商品を出品しました。'
+    else
+      render :new
+    end
   end
 
 
   # メソッド(Private)
   private
+
+  def search_items
+    one = Item.all
+    one = one.order(created_at: :desc) if params[:sort_order] == 'created_desc'
+    one = one.order(price: :asc) if params[:sort_order] == 'price_asc'
+    one = one.order(price: :desc) if params[:sort_order] == 'price_desc'
+    one
+  end
 
   def item_params
     params.require(:item).permit(*PERMITTED_ATTRIBUTES)
