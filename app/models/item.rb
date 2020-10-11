@@ -9,6 +9,7 @@ class Item < ApplicationRecord
 
   # 関連
   belongs_to :user
+  belongs_to :category
 
 
   # 委譲
