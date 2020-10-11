@@ -32,14 +32,15 @@ class ItemsController < ApplicationController
 
   def search_items
     one = Item.all
+    
+    # 絞込
+    one = one.where('items.name LIKE ?', '%' + params[:keyword] + '%') if params[:keyword].present?
+    one = one.joins(:category).where(categories: { id: params[:category_parent] }) if params[:category_parent].present?
 
     # ソート
     one = one.order(created_at: :desc) if params[:sort_order] == 'created_desc'
     one = one.order(price: :asc) if params[:sort_order] == 'price_asc'
     one = one.order(price: :desc) if params[:sort_order] == 'price_desc'
-
-    # 絞込
-    one = one.where('items.name LIKE ?', '%' + params[:keyword] + '%') if params[:keyword].present?
 
     one
   end
