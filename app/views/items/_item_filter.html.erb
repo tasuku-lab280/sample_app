@@ -49,25 +49,15 @@
         </select>
       </div>
 
-      <div class="form-check mt-4">
+      <div class="form-group mt-4">
         <span class="font-weight-bold small">商品の状態</span>
-        <div>
-          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-          <label class="form-check-label" for="defaultCheck1">
-            すべて
-          </label>
-        </div>
-        <div>
-          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-          <label class="form-check-label" for="defaultCheck1">
-            新品、未使用
-          </label>
-        </div>
-        <div>
-          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-          <label class="form-check-label" for="defaultCheck1">
-            未使用に近い
-          </label>
+        <div class="row">
+          <% Item.condition.options.each do |key, value| %>
+            <div class="col-md-6">
+              <%= f.check_box :condition, { multiple: true, id: "condition_#{value}" }, value, nil %>
+              <%= f.label :condition, key, value: value %>
+            </div>
+          <% end %>
         </div>
       </div>
 

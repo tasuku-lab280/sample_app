@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   # 定数
-  INDEX_PER_ITEMS = 10
+  INDEX_PER_ITEMS = 50
   PERMITTED_ATTRIBUTES = %i(name body price condition image note)
 
 
@@ -39,6 +39,7 @@ class ItemsController < ApplicationController
     
     # 絞込
     one = one.where('items.name LIKE ?', '%' + params[:keyword] + '%') if params[:keyword].present?
+    one = one.where(condition: params[:condition]) if params[:condition].present?
     one = one.joins(:category).where(categories: { id: params[:category_parent] }) if params[:category_parent].present?
 
     # ソート

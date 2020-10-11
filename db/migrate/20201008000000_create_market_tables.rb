@@ -3,11 +3,13 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
     # 商品
     create_table :items do |t|
       t.integer           :user_id,          null: false
-      t.integer           :category_id
+      t.integer           :category_id,      null: false
       t.string            :name,             null: false
       t.text              :body,             null: false
       t.integer           :price,            null: false
       t.string            :condition,        null: false
+      t.string            :delivery_fee,     null: false
+      t.string            :sales_status,     null: false
       t.string            :image
       t.text              :note
       t.timestamps                           null: false

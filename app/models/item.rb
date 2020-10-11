@@ -2,6 +2,8 @@ class Item < ApplicationRecord
   # モジュール
   extend Enumerize
   enumerize :condition, in: %i(good somewhat_good normal somewhat_bad bad), predicates: { prefix: true }, scope: true
+  enumerize :delivery_fee, in: %i(cash_delivery postage_included), predicates: { prefix: true }, scope: true
+  enumerize :sales_status, in: %i(sales sold_out), predicates: { prefix: true }, scope: true
 
 
   # 定数
