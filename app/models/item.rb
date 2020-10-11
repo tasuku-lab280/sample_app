@@ -13,6 +13,8 @@ class Item < ApplicationRecord
 
 
   # 委譲
+  def user_name; user.name; end
+  def category_name; category.name; end
 
 
   # スコープ
