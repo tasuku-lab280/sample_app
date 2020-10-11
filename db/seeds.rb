@@ -35,10 +35,26 @@ line_count = rand(1..4)
   )
 end
 
+# カテゴリ
+Category.create!(name: 'レディース')
+Category.create!(name: 'メンズ')
+Category.create!(name: 'ベビー・キッズ')
+Category.create!(name: 'インテリア・住まい・小物')
+Category.create!(name: '本・音楽・ゲーム')
+Category.create!(name: 'おもちゃ・ホビー・グッズ')
+Category.create!(name: 'コスメ・香水・美容')
+Category.create!(name: '家電・スマホ・カメラ')
+Category.create!(name: 'スポーツ・レジャー')
+Category.create!(name: 'ハンドメイド')
+Category.create!(name: 'チケット')
+Category.create!(name: '自転車・オートバイ')
+Category.create!(name: 'その他')
+
 # 商品
 User.where(id: [1, 2]).each do |user|
   items = (1..10).map do |i|
     {
+      category_id: [*1..13].sample,
       name: "サンプル商品#{i+1}",
       body: "サンプル本文#{i+1}",
       price: i * 1000,
