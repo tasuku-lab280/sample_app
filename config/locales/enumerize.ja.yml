@@ -14,3 +14,9 @@ ja:
         normal: "普通"
         somewhat_bad: "やや悪い"
         bad: "悪い"
+      delivery_fee:
+        cash_delivery: "着払い(購入者負担)"
+        postage_included: "送料込み(出品者負担)"
+      sales_status:
+        sales: "販売中"
+        sold_out: "売り切れ"

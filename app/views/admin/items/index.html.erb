@@ -1,0 +1,28 @@
+<nav aria-label="パンくずリスト">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'ホーム', admin_root_path %></li>
+    <li class="breadcrumb-item active" aria-current="page">商品一覧</li>
+  </ol>
+</nav>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col"><%= Item.human_attribute_name :id %></th>
+      <th scope="col"><%= Item.human_attribute_name :name %></th>
+      <th scope="col"><%= Item.human_attribute_name :body %></th>
+      <th scope="col"><%= Item.human_attribute_name :price %></th>
+      <th scope="col"><%= Item.human_attribute_name :condition %></th>
+      <th scope="col"><%= Item.human_attribute_name :delivery_fee %></th>
+      <th scope="col"><%= Item.human_attribute_name :sales_status %></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: 'item', collection: @items %>
+  </tbody>
+</table>
+
+<!-- paginate -->
+<%= paginate @items %>
+<!-- end paginate -->

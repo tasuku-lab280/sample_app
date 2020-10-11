@@ -15,11 +15,17 @@ Rails.application.routes.draw do
     end
   end 
   resources :chat_messages, only: :create
+  resources :items
 
+  # 管理画面
+  namespace :admin do
+    root 'homes#index'
+    resources :items
+  end
+
+  # api
   namespace :api, {format: 'json'} do
     resources :posts
     resources :chat_messages
   end
-
-  resources :items
 end
