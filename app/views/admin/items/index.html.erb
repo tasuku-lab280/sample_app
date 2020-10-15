@@ -5,6 +5,8 @@
 
 <%= render 'admin/shared/form' %>
 
+<%= link_to "一覧をダウンロード", admin_items_path(format: :csv), class: "btn btn-success mt-3" %>
+
 <%= render 'admin/shared/table' %>
 
 <!-- paginate -->

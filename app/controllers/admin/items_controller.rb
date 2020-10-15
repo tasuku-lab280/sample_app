@@ -10,7 +10,17 @@ class Admin::ItemsController < AdminController
   # メソッド
   def index
     one = search_items
+    @csv_data = one
     @items = one.page(params[:page]).per(params[:per_page] || INDEX_PER_ITEMS)
+
+    respond_to do |format|
+      format.html do
+        @items
+      end 
+      format.csv do
+        send_data render_to_string, filename: "(ファイル名).csv", type: :csv
+      end
+    end
   end
 
   def new
@@ -37,8 +47,10 @@ class Admin::ItemsController < AdminController
   def search_items
     one = Item.all
     
-    # # 絞込
-    # one = one.where('items.name LIKE ?', '%' + params[:keyword] + '%') if params[:keyword].present?
+    # 絞込
+    one = one.where('items.name LIKE ?', '%' + params[:name] + '%') if params[:name].present?
+    one = one.where('items.body LIKE ?', '%' + params[:body] + '%') if params[:body].present?
+    one = one.where('items.price LIKE ?', '%' + params[:price] + '%') if params[:price].present?
     # one = one.where(condition: params[:condition]) if params[:condition].present?
     # one = one.joins(:category).where(categories: { id: params[:category_parent] }) if params[:category_parent].present?
 
