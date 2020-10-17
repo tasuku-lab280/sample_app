@@ -1,39 +1,49 @@
-<header class="border mb-4">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <%= link_to "Deviseサンプル", root_path, class: 'navbar-brand' %>
-    <div id="Navber">
+<header class="mb-5" style="height: 100px; background-color: white;">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg ">
+      <%= link_to 'フリマアプリ', root_path, class: 'navbar-brand text-dark font-weight-bold' %>
+      <%= form_with url: items_path, method: "get", class: 'form-group m-0', local: true do |f| %>
+        <%= f.text_field :keyword, value: params[:keyword], placeholder: '何かお探しですか？', class: 'form-control form-control-sm', style: 'width: 950px' %>
+      <% end %>
+    </nav>
+    <nav class="navbar navbar-expand-lg p-0">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <%= link_to 'カテゴリから探す', '#', class: 'nav-link text-dark font-weight-bold' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'ブランドから探す', '#', class: 'nav-link text-dark font-weight-bold' %>
+        </li>
+      </ul>
       <ul class="navbar-nav">
         <% if user_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to 'アカウント編集', edit_user_registration_path, class: 'nav-link' %>
+          <li class="nav-item">
+            <%= link_to 'いいね一覧', '#', class: 'nav-link text-dark' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'お知らせ', '#', class: 'nav-link text-dark' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'やることリスト', '#', class: 'nav-link text-dark' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'マイページ', '#', class: 'nav-link text-dark' %>
           </li>
           <li class="nav-item active">
-            <%= link_to '会員一覧', users_path, class: 'nav-link' %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to 'マイページ', user_path(current_user), class: 'nav-link' %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to 'チャット', chat_rooms_path, class: 'nav-link' %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to '出品する', new_item_path, class: 'nav-link' %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
           </li>
         <% else %>
-          <li class="nav-item active">
-            <%= link_to "新規登録", new_user_registration_path, class: 'nav-link' %>
+          <li class="nav-item">
+            <%= link_to "新規会員登録", new_user_registration_path, class: 'btn btn-danger btn-sm mr-2' %>
           </li>
-          <li class="nav-item active">
-            <%= link_to "ログイン", new_user_session_path, class: 'nav-link' %>
+          <li class="nav-item">
+            <%= link_to "ログイン", new_user_session_path, class: 'btn btn-outline-primary btn-sm mr-2' %>
           </li>
-          <li class="nav-item active">
-            <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: 'nav-link' %>
+          <li class="nav-item">
+            <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: 'btn btn-outline-primary btn-sm' %>
           </li>
         <% end %>
       </ul>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </header>

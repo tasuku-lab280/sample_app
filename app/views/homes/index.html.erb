@@ -1,9 +1,22 @@
-<%= render 'shared/flash_messages' %>
+<div class="bg-primary" style="height: 300px;">
+</div>
+<div class="bg-light py-5" style="height: 150px;">
+  <h3 class="text-center font-weight-bold">人気のカテゴリ</h3>
+  <div class="d-flex justify-content-center mt-3">
+    <% @categories.each do |category| %>
+      <span class="badge badge-secondary mr-2">
+        <%= link_to category.name, '#link-in-page-' + category.id.to_s, class: 'text-light' %>
+      </span>
+    <% end %>
+  </div>
+</div>
 
-<%= select_tag('animal', options_for_select([['いぬ', 'dog'], ['ねこ', 'cat'], ['とり', 'bird'], ['うし', 'cow'], ['へび', 'snake']]), class: "form-control", multiple: true) %>
+<%= render partial: 'category', collection: @categories %>
 
-<script>
-$(function () {
-  $('#animal').select2();
-});
-</script>
+<%= link_to new_item_path do %>
+  <div class="fixed-bottom bg-danger mb-5 mr-5 ml-auto" style="width: 150px; height: 150px; border-radius: 50%;">
+    <p class="text-center text-light font-weight-bold" style="font-size: 1.5rem; line-height: 150px;">
+      出品
+    </p>
+  </div>
+<% end %>

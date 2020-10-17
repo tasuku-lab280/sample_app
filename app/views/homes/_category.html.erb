@@ -1,0 +1,22 @@
+<div class="d-flex justify-content-between mt-5">
+  <h3 class="font-weight-bold" id="link-in-page-<%= category.id %>"><%= category.name %>新着アイテム</h3>
+  <% if category.items.count > 8 %>
+    <p><%= link_to 'もっと見る  ＞', '#' %></p>
+  <% end %>
+</div>
+<div class="row">
+  <% category.items.limit(8).each do |item| %>
+    <div class="col-md-3 mb-3">
+      <%= link_to item_path(item) do %>
+        <div class="card">
+          <div class="card-img-top bg-secondary" style="height: 200px;">
+            <span class="badge badge-secondary">¥<%= item.price %></span>
+          </div>
+          <div class="card-body">
+            <p class="card-title text-dark"><%= item.name %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
