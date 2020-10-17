@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end 
   resources :chat_messages, only: :create
   resources :items
+  resources :categories, only: :show
 
   # 管理画面
   namespace :admin do

@@ -1,11 +1,8 @@
-<div class="d-flex justify-content-between mt-5">
-  <h3 class="font-weight-bold" id="link-in-page-<%= category.id %>"><%= category.name %>新着アイテム</h3>
-  <% if category.items.count > 8 %>
-    <p><%= link_to 'もっと見る  ＞', category_path(category) %></p>
-  <% end %>
+<div class="d-flex justify-content-between my-5">
+  <h3 class="font-weight-bold"><%= @category.name %>の商品一覧</h3>
 </div>
 <div class="row">
-  <% category.items.limit(8).each do |item| %>
+  <% @items.each do |item| %>
     <div class="col-md-3 mb-3">
       <%= link_to item_path(item) do %>
         <div class="card">
