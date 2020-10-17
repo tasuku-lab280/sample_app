@@ -92,3 +92,16 @@ footer {
   background-color: #afeeee;
   border-radius: 5px;
 }
+
+// 管理画面
+.admin-sidebar {
+  ul {
+    li {
+      list-style: none;
+
+      span {
+        color: white;
+      }
+    }
+  }
+}
