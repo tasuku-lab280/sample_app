@@ -1,0 +1,70 @@
+<div class="col-sm-4 px-5">
+
+  <%= form_with url: items_path, method: "get", class: 'form-group', local: true do |f| %>
+    <% order_options = options_for_select({
+        '並び替え': '',
+        '価格の安い順': 'price_asc',
+        '価格の高い順': 'price_desc',
+        '出品の新しい順': 'created_desc',
+        'いいねの多い順': 'like_desc',
+      }, params[:sort_order])
+    %>
+    <%= f.select :sort_order, order_options, {}, class: 'form-control' %>
+    <%= f.submit '適用', class: "btn btn-primary btn-sm mt-2" %>
+  <% end %>
+
+  <div class="rounded p-3" style="background-color: #FFFFFF;">
+    <p class="font-weight-bold">詳細検索</p>
+
+    <%= form_with url: items_path, method: "get", class: 'form-group', local: true do |f| %>
+      <%= hidden_field_tag(:sort_order, params[:sort_order]) %>
+
+      <div class="form-group">
+        <span class="font-weight-bold small">キーワードを追加する</span>
+        <%= f.text_field :keyword, value: params[:keyword], class: 'form-control' %>
+      </div>
+
+      <div class="form-group mt-4">
+        <span class="font-weight-bold small">カテゴリを選択する</span>
+        <% categories_options = options_from_collection_for_select(Category.all, :id, :name, params[:category_parent]) %>
+        <%= f.select :category_parent, categories_options, { include_blank: 'すべて' }, class: 'form-control' %>
+      </div>
+
+      <div class="form-group mt-4">
+        <span class="font-weight-bold small">ブランド名から探す</span>
+        <input class="form-control" placeholder="例) シャネル">
+      </div>
+
+      <div class="form-group mt-4">
+        <span class="font-weight-bold small">サイズを選択する</span>
+        <select class="form-control">
+          <option>全て</option>
+        </select>
+      </div>
+
+      <div class="form-group mt-4">
+        <span class="font-weight-bold small">価格</span>
+        <select class="form-control">
+          <option>選択して下さい</option>
+        </select>
+      </div>
+
+      <div class="form-group mt-4">
+        <span class="font-weight-bold small">商品の状態</span>
+        <div class="row">
+          <% Item.condition.options.each do |key, value| %>
+            <div class="col-md-6">
+              <%= f.check_box :condition, { multiple: true, id: "condition_#{value}" }, value, nil %>
+              <%= f.label :condition, key, value: value %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <%= f.submit '適用', class: "btn btn-primary btn-sm mt-2" %>
+
+    <% end %>
+
+  </div>
+
+</div>
