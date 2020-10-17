@@ -42,6 +42,13 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["chat_room_id", "user_id"], name: "index_chat_users_on_chat_room_id_and_user_id"
   end
 
+  create_table "item_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "image", null: false
+    t.text "note"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "category_id", null: false
@@ -51,7 +58,6 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.string "condition", null: false
     t.string "delivery_fee", null: false
     t.string "sales_status", null: false
-    t.string "image"
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

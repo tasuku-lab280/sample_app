@@ -10,6 +10,7 @@ class Item < ApplicationRecord
 
 
   # 関連
+  has_many :item_images, dependent: :destroy
   belongs_to :user
   belongs_to :category
 
@@ -43,10 +44,6 @@ class Item < ApplicationRecord
                                       # uniqueness: false
                                       # format: false
   validates :condition,               presence: true
-                                      # length: { maximum: 255, allow_blank: true }
-                                      # uniqueness: false
-                                      # format: false
-  # validates :image,                   presence: false
                                       # length: { maximum: 255, allow_blank: true }
                                       # uniqueness: false
                                       # format: false

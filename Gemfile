@@ -41,6 +41,8 @@ gem 'faker'
 gem 'select2-rails'
 gem 'rack-cors'
 gem 'ancestry'
+gem 'carrierwave'
+
 
 # 日本語化
 gem 'rails-i18n', '~> 6.0'

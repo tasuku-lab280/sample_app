@@ -10,11 +10,17 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
       t.string            :condition,        null: false
       t.string            :delivery_fee,     null: false
       t.string            :sales_status,     null: false
-      t.string            :image
       t.text              :note
       t.timestamps                           null: false
     end
     add_index :items, %i(user_id category_id)
+
+    # 商品画像
+    create_table :item_images do |t|
+      t.string            :image,            null: false
+      t.text              :note
+      t.timestamps                           null: false
+    end
 
     # カテゴリ
     create_table :categories do |t|
@@ -26,6 +32,7 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
 
   def down
     drop_table :items
+    drop_table :item_images
     drop_table :categories
   end
 end
