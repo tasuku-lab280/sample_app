@@ -17,6 +17,7 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
 
     # 商品画像
     create_table :item_images do |t|
+      t.integer           :item_id
       t.string            :image,            null: false
       t.text              :note
       t.timestamps                           null: false

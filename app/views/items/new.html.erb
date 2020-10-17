@@ -2,6 +2,17 @@
   <div class="col-md-8 offset-md-2 rounded p-5" style="background-color: #FFFFFF;">
     <%= render 'shared/flash_item' %>
     <%= form_with model: @item, local: true do |f| %>
+
+      <%= f.fields_for :item_images, @item.item_images.build do |ff| %>
+        <div class="form-group">
+          <%= ff.label :image %>
+          <p>最大10枚までアップロードできます</p>
+          <%= ff.file_field :image %>
+        </div>
+      <% end %>
+
+      <hr>
+
       <div class="form-group">
         <%= f.label :name %>
         <%= f.text_field :name, class: 'form-control', placeholder: '40文字まで' %>
@@ -10,15 +21,38 @@
         <%= f.label :body %>
         <%= f.text_area :body, class: 'form-control', rows: '5', placeholder: '商品の説明（必須 1,000文字以内）' %>
       </div>
+
+      <hr>
+
       <div class="form-group">
-        <%= f.label :price %>
-        <%= f.number_field :price, class: 'form-control', placeholder: '数字で入力してください' %>
+        <%= f.label :category_id %>
+        <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name), { include_blank: '選択してください' }, class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.label :condition %>
         <%= f.select :condition, Item.condition.options, { include_blank: '選択してください' }, class: 'form-control' %>
       </div>
+
+      <hr>
+
+      <div class="form-group">
+        <%= f.label :delivery_fee %>
+        <%= f.select :delivery_fee, Item.delivery_fee.options, { include_blank: '選択してください' }, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :sales_status %>
+        <%= f.select :sales_status, Item.sales_status.options, { include_blank: '選択してください' }, class: 'form-control' %>
+      </div>
+
+      <hr>
+
+      <div class="form-group">
+        <%= f.label :price %>
+        <%= f.number_field :price, class: 'form-control', placeholder: '数字で入力してください' %>
+      </div>
+
       <%= f.submit '出品する', class: "btn btn-primary btn-block" %>
+
     <% end %>
   </div>
 </div>

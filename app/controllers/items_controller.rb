@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
   # 定数
   INDEX_PER_ITEMS = 50
-  PERMITTED_ATTRIBUTES = %i(name body price condition image note)
+  PERMITTED_ATTRIBUTES = %i(category_id name body price condition delivery_fee sales_status note)
+  NESTED_ATTRIBUTES = %i(id item_id image)
 
 
   # フック
@@ -51,6 +52,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(*PERMITTED_ATTRIBUTES)
+    params.require(:item).permit(*PERMITTED_ATTRIBUTES, item_images_attributes: [:id, :item_id, :image])
   end
 end

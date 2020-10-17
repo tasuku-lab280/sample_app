@@ -1,5 +1,6 @@
-class ItemImages < ApplicationRecord
+class ItemImage < ApplicationRecord
   # モジュール
+  mount_uploader :image, ItemImageUploader
 
 
   # 定数

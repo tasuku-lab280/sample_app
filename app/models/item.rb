@@ -13,6 +13,7 @@ class Item < ApplicationRecord
   has_many :item_images, dependent: :destroy
   belongs_to :user
   belongs_to :category
+  accepts_nested_attributes_for :item_images, allow_destroy: true
 
 
   # 委譲
@@ -63,6 +64,13 @@ class Item < ApplicationRecord
 
 
   # メソッド
+  def first_image
+    if item_images.exists?
+      item_images.first.image.url
+    else
+      'no-image.jpg'
+    end
+  end
 
 
   # メソッド(Private)

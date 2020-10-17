@@ -4,6 +4,7 @@ ja:
       user: "会員"
       post: "投稿"
       item: "商品"
+      item_image: "商品画像"
 
     attributes:
       user:
@@ -13,11 +14,16 @@ ja:
         created_at: "投稿日時"
       item:
         id: "ID"
+        category_id: "カテゴリ"
         name: "商品名"
         body: "本文"
         price: "価格"
         condition: "商品の状態"
         delivery_fee: "配送料の負担"
         sales_status: "販売状況"
+        image: "画像"
+        note: "備考"
+      item_image:
+        id: "ID"
         image: "画像"
         note: "備考"

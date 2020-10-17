@@ -9,10 +9,10 @@
     <div class="col-md-3 mb-3">
       <%= link_to item_path(item) do %>
         <div class="card">
-          <div class="card-img-top bg-secondary" style="height: 200px;">
-            <span class="badge badge-secondary">¥<%= item.price %></span>
-          </div>
+          <%= image_tag item.first_image, class: 'img-thumbnail', style: 'height: 200px' do %>
+          <% end %>
           <div class="card-body">
+            <span class="badge badge-secondary">¥<%= item.price %></span>
             <p class="card-title text-dark"><%= item.name %></p>
           </div>
         </div>
