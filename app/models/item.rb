@@ -13,6 +13,7 @@ class Item < ApplicationRecord
 
   # 関連
   has_many :item_images, dependent: :destroy
+  has_many :comments, dependent: :destroy
   belongs_to :user
   belongs_to :category
   accepts_nested_attributes_for :item_images, allow_destroy: true

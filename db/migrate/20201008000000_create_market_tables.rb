@@ -31,11 +31,20 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
       t.text              :note
       t.timestamps                           null: false
     end
+
+    # コメント
+    create_table :comments do |t|
+      t.integer           :user_id,          null: false
+      t.integer           :item_id,          null: false
+      t.text              :comment,          null: false
+      t.timestamps                           null: false
+    end
   end
 
   def down
     drop_table :items
     drop_table :item_images
     drop_table :categories
+    drop_table :comments
   end
 end

@@ -15,7 +15,9 @@ Rails.application.routes.draw do
     end
   end 
   resources :chat_messages, only: :create
-  resources :items
+  resources :items do
+    resources :comments, only: [:create, :destroy]
+  end
   resources :categories, only: :show
 
   # 管理画面
