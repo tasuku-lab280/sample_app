@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: items
+#
+#  id           :bigint           not null, primary key
+#  body         :text(65535)      not null
+#  condition    :string(255)      not null
+#  days_to_ship :string(255)      not null
+#  delivery_fee :string(255)      not null
+#  name         :string(255)      not null
+#  note         :text(65535)
+#  prefecture   :integer          not null
+#  price        :integer          not null
+#  sales_status :string(255)      not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  category_id  :integer          not null
+#  user_id      :integer          not null
+#
+# Indexes
+#
+#  index_items_on_user_id_and_category_id  (user_id,category_id)
+#
 class Item < ApplicationRecord
   # モジュール
   extend Enumerize

@@ -42,6 +42,7 @@ gem 'select2-rails'
 gem 'rack-cors'
 gem 'ancestry'
 gem 'carrierwave'
+gem 'annotate'
 
 
 # 日本語化
