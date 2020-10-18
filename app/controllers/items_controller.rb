@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
 
 
   # フック
+  before_action :authenticate_user!, only: [:new, :create]
 
 
   # メソッド
@@ -29,6 +30,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @other_items = @item.user.items.order(created_at: :desc).limit(6)
   end
 
 

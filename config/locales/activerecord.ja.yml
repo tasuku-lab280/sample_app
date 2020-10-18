@@ -20,6 +20,8 @@ ja:
         price: "価格"
         condition: "商品の状態"
         delivery_fee: "配送料の負担"
+        prefecture: "発送元の地域"
+        days_to_ship: "発送までの日数"
         sales_status: "販売状況"
         image: "画像"
         note: "備考"

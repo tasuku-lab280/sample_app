@@ -51,7 +51,7 @@ Category.create!(name: '自転車・オートバイ')
 Category.create!(name: 'その他')
 
 # 商品
-User.where(id: [1..10]).each do |user|
+User.where(id: [1..15]).each do |user|
   items = (1..10).map do |i|
     {
       category_id: [*1..13].sample,
@@ -60,6 +60,8 @@ User.where(id: [1..10]).each do |user|
       price: i * 1000,
       condition: Item.condition.values.sample,
       delivery_fee: Item.delivery_fee.values.sample,
+      prefecture: Item.prefecture.values.sample,
+      days_to_ship: Item.days_to_ship.values.sample,
       sales_status: Item.sales_status.values.sample,
     }
   end

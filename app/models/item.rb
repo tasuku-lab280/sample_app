@@ -3,7 +3,9 @@ class Item < ApplicationRecord
   extend Enumerize
   enumerize :condition, in: %i(good somewhat_good normal somewhat_bad bad), predicates: { prefix: true }, scope: true
   enumerize :delivery_fee, in: %i(cash_delivery postage_included), predicates: { prefix: true }, scope: true
+  enumerize :days_to_ship, in: %i(ships_in_1-2 ships_in_2-3 ships_in_4-7), predicates: { prefix: true }, scope: true
   enumerize :sales_status, in: %i(sales sold_out), predicates: { prefix: true }, scope: true
+  include Prefecture
 
 
   # 定数

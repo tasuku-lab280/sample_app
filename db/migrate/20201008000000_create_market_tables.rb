@@ -9,6 +9,8 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
       t.integer           :price,            null: false
       t.string            :condition,        null: false
       t.string            :delivery_fee,     null: false
+      t.integer           :prefecture,       null: false
+      t.string            :days_to_ship,     null: false
       t.string            :sales_status,     null: false
       t.text              :note
       t.timestamps                           null: false
