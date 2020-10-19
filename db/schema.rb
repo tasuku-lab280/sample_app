@@ -75,6 +75,17 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["user_id", "category_id"], name: "index_items_on_user_id_and_category_id"
   end
 
+  create_table "notices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "sender_id"
+    t.text "message", null: false
+    t.text "url", null: false
+    t.datetime "read_at", null: false
+    t.text "note", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "content"
     t.string "category", null: false

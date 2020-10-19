@@ -39,6 +39,17 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
       t.text              :comment,          null: false
       t.timestamps                           null: false
     end
+
+    # 通知
+    create_table :notices do |t|
+      t.integer           :user_id,          null: false
+      t.integer           :sender_id
+      t.text              :message,          null: false
+      t.text              :url,              null: false
+      t.datetime          :read_at,          null: false
+      t.text              :note,             null: false
+      t.timestamps                           null: false
+    end
   end
 
   def down
@@ -46,5 +57,6 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
     drop_table :item_images
     drop_table :categories
     drop_table :comments
+    drop_table :notices
   end
 end
