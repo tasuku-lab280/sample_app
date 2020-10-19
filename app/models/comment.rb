@@ -9,6 +9,10 @@
 #  item_id    :integer          not null
 #  user_id    :integer          not null
 #
+# Indexes
+#
+#  index_comments_on_user_id_and_item_id  (user_id,item_id)
+#
 class Comment < ApplicationRecord
   # モジュール
 

@@ -24,6 +24,7 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
       t.text              :note
       t.timestamps                           null: false
     end
+    add_index :item_images, :item_id
 
     # カテゴリ
     create_table :categories do |t|
@@ -39,6 +40,7 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
       t.text              :comment,          null: false
       t.timestamps                           null: false
     end
+    add_index :comments, %i(user_id item_id)
 
     # 通知
     create_table :notices do |t|
@@ -46,10 +48,11 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
       t.integer           :sender_id
       t.text              :message,          null: false
       t.text              :url,              null: false
-      t.datetime          :read_at,          null: false
-      t.text              :note,             null: false
+      t.datetime          :read_at
+      t.text              :note
       t.timestamps                           null: false
     end
+    add_index :notices, %i(user_id sender_id)
   end
 
   def down

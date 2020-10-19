@@ -4,13 +4,17 @@
 #
 #  id         :bigint           not null, primary key
 #  message    :text(65535)      not null
-#  note       :text(65535)      not null
-#  read_at    :datetime         not null
+#  note       :text(65535)
+#  read_at    :datetime
 #  url        :text(65535)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  sender_id  :integer
 #  user_id    :integer          not null
+#
+# Indexes
+#
+#  index_notices_on_user_id_and_sender_id  (user_id,sender_id)
 #
 class Notice < ApplicationRecord
   # モジュール

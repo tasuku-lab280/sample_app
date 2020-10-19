@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "item_id"], name: "index_comments_on_user_id_and_item_id"
   end
 
   create_table "item_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -56,6 +57,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_id"], name: "index_item_images_on_item_id"
   end
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -80,10 +82,11 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.integer "sender_id"
     t.text "message", null: false
     t.text "url", null: false
-    t.datetime "read_at", null: false
-    t.text "note", null: false
+    t.datetime "read_at"
+    t.text "note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "sender_id"], name: "index_notices_on_user_id_and_sender_id"
   end
 
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
