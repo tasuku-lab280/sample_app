@@ -27,7 +27,20 @@
             <div class="dropdown-menu mt-0" aria-labelledby="navbarDropdown">
               <% @notices.each do |notice| %>
                 <%= link_to '#', id: "notice-#{notice.id}", class: "js-navbar-notification-dropdown-item dropdown-item" do %>
-                  <%= raw notice.message %>
+                  <div class="d-flex align-items-center">
+                    <div class="text-center mr-3">
+                      <%# image = notice.sender_id? ? notice.sender_image.url(:thumb) : 'no-image.jpg' %>
+                      <%= image_tag 'no-image.jpg', style: 'height: 50px; width: 50px;' %>
+                    </div>
+                    <div>
+                      <div class="text-wrap">
+                        <p style="font-size: 0.8rem;"><%= raw notice.message %></p>
+                      </div>
+                      <div class="text-muted">
+                        <p style="font-size: 0.7rem;"><%= time_ago_in_words(notice.created_at) %>前</p>
+                      </div>
+                    </div>
+                  </div>
                 <% end %>
               <% end %>
             </div>
