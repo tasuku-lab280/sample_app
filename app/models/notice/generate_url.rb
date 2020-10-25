@@ -12,8 +12,8 @@ module Notice::GenerateUrl
     Rails.application.routes.url_helpers
   end
 
-  ## チャットメッセージ
-  def create_comment_path(chat_message)
-    routes.chat_path(chat_message.chat_id)
+  ## コメント
+  def create_comment_path(comment)
+    routes.item_path(comment.item)
   end
 end

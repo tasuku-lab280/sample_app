@@ -18,9 +18,11 @@
 #
 class Notice < ApplicationRecord
   # モジュール
+  include GenerateNotice
 
 
   # 定数
+  MESSAGE_LIMIT = 10
 
 
   # 関連

@@ -14,8 +14,6 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        # seller = @comment.item.user
-        # seller.notices.generate_by(:create_comment, @comment).save!
         format.html { redirect_to item_path(item) } 
         format.js
       else
@@ -23,6 +21,9 @@ class CommentsController < ApplicationController
         format.js
       end
     end
+
+    seller = @comment.item.user
+    seller.notices.generate_by(:create_comment, @comment).save!
   end
 
   def destroy

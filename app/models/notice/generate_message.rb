@@ -19,10 +19,8 @@ module Notice::GenerateMessage
   def create_comment_message(comment)
     body = if comment.body.present?
              "『#{notice_sanitize(comment.body).truncate(Notice::MESSAGE_LIMIT)}』"
-           else
-            comment.image.present? ? '画像を送信しました。' : 'ファイルを送信しました。'
            end
-    nickname = notice_sanitize(comment.author.nickname)
-    "<span class='font-weight-bold'>#{nickname}</span>さん：" + body
+    user_name = notice_sanitize(comment.user_name)
+    "<span class='font-weight-bold'>#{user_name}</span>さん：" + body
   end
 end
