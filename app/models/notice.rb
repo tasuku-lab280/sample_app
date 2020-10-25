@@ -3,7 +3,7 @@
 # Table name: notices
 #
 #  id         :bigint           not null, primary key
-#  message    :text(65535)      not null
+#  body       :text(65535)      not null
 #  note       :text(65535)
 #  read_at    :datetime
 #  url        :text(65535)      not null
@@ -53,7 +53,7 @@ class Notice < ApplicationRecord
                                       # length: { maximum: 255, allow_blank: true }
                                       # uniqueness: false
                                       # format: false
-  validates :message,                 presence: true,
+  validates :body,                    presence: true,
                                       length: { maximum: 1024, allow_blank: true }
                                       # uniqueness: false
                                       # format: false

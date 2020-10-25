@@ -46,7 +46,7 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
     create_table :notices do |t|
       t.integer           :user_id,          null: false
       t.integer           :sender_id
-      t.text              :message,          null: false
+      t.text              :body,             null: false
       t.text              :url,              null: false
       t.datetime          :read_at
       t.text              :note

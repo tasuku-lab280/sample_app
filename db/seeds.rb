@@ -80,7 +80,7 @@ notices = Array.new(50) do |n|
   {
     user_id: user.id,
     sender_id: atrs[0],
-    message: "<span class='font-weight-bold'>#{atrs[1]}</span>さんがサンプル通知#{n}を作成しました。",
+    body: "<span class='font-weight-bold'>#{atrs[1]}</span>さんがサンプル通知#{n}を作成しました。",
     url: '/',
     read_at: (n % 4 == 0 ? nil : Time.current)
   }

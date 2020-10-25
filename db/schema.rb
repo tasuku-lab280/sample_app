@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
   create_table "notices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "sender_id"
-    t.text "message", null: false
+    t.text "body", null: false
     t.text "url", null: false
     t.datetime "read_at"
     t.text "note"

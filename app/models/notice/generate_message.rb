@@ -10,9 +10,9 @@ module Notice::GenerateMessage
   # メソッド (private)
   private
 
-  def notice_sanitize(message)
+  def notice_sanitize(comment)
     @full_sanitizer ||= Rails::Html::FullSanitizer.new
-    @full_sanitizer.sanitize(message)
+    @full_sanitizer.sanitize(comment)
   end
 
   ## コメント

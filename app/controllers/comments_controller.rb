@@ -16,14 +16,13 @@ class CommentsController < ApplicationController
       if @comment.save
         format.html { redirect_to item_path(item) } 
         format.js
+        seller = @comment.item.user
+        seller.notices.generate_by(:create_comment, @comment).save!
       else
         format.html { redirect_to item_path(item) } 
         format.js
       end
     end
-
-    seller = @comment.item.user
-    seller.notices.generate_by(:create_comment, @comment).save!
   end
 
   def destroy
