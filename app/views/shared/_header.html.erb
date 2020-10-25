@@ -21,9 +21,9 @@
             <%= link_to 'いいね一覧', '#', class: 'nav-link text-dark' %>
           </li>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <%= link_to settings_notices_path, class: 'nav-link dropdown-toggle text-dark', id: 'navbarDropdown' do %>
               お知らせ
-            </a>
+            <% end %>
             <div class="dropdown-menu mt-0" aria-labelledby="navbarDropdown">
               <% @notices.each do |notice| %>
                 <%= link_to '#', id: "notice-#{notice.id}", class: "js-navbar-notification-dropdown-item dropdown-item" do %>
@@ -49,7 +49,7 @@
             <%= link_to 'やることリスト', '#', class: 'nav-link text-dark' %>
           </li>
           <li class="nav-item">
-            <%= link_to 'マイページ', '#', class: 'nav-link text-dark' %>
+            <%= link_to 'マイページ', settings_path, class: 'nav-link text-dark' %>
           </li>
           <li class="nav-item active">
             <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link btn btn-danger btn-sm' %>

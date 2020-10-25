@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
   resources :categories, only: :show
+
+  # マイページ
+  resources :settings, only: :index
   namespace :settings do
     resources :notices, only: :index
   end
