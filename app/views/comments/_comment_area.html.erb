@@ -10,7 +10,7 @@
 
   <%= form_with model: [item, comment], id: 'comment_form', data: { turbolinks: false }, remote: true do |f| %>
     <%= f.hidden_field :item_id, value: item.id %>
-    <%= f.text_area :comment, class: 'form-control', id: 'comment_form-body', rows: '5' %>
+    <%= f.text_area :body, class: 'form-control', id: 'comment_form-body', rows: '5' %>
     <%= f.submit 'コメントする', class: "btn btn-secondary btn-block mt-2" %>
   <% end %>
 

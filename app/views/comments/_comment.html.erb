@@ -9,7 +9,7 @@
       <span class="font-weight-bold"><%= comment.user_name %></span>
       <div class="comment-area mt-2">
         <div>
-          <p><%= comment.comment %></p>
+          <p><%= comment.body %></p>
         </div>
         <div class="d-flex justify-content-between mt-4">
           <%= time_ago_in_words(comment.created_at) %>前

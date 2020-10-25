@@ -37,7 +37,7 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
     create_table :comments do |t|
       t.integer           :user_id,          null: false
       t.integer           :item_id,          null: false
-      t.text              :comment,          null: false
+      t.text              :body,             null: false
       t.timestamps                           null: false
     end
     add_index :comments, %i(user_id item_id)

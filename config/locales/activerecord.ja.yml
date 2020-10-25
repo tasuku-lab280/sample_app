@@ -34,6 +34,12 @@ ja:
         image: "画像"
         note: "備考"
 
+      comment:
+        id: "ID"
+        user_id: "会員ID"
+        item_id: "商品ID"
+        body: "本文"
+
       notice:
         id: "ID"
         user_id: "会員名"
