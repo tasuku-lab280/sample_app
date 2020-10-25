@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
   resources :categories, only: :show
+  namespace :settings do
+    resources :notices, only: :index
+  end
 
   # 管理画面
   namespace :admin do
