@@ -14,6 +14,5 @@
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-
-console.log('Hello World from Webpacker')
-require("bootstrap/dist/js/bootstrap")
+import 'bootstrap'
+import '../stylesheets/application.scss'

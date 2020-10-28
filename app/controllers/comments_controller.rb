@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   # 定数
-  PERMITTED_ATTRIBUTES = %i(user_id item_id comment)
+  PERMITTED_ATTRIBUTES = %i(user_id item_id body)
 
 
   # フック
@@ -16,6 +16,8 @@ class CommentsController < ApplicationController
       if @comment.save
         format.html { redirect_to item_path(item) } 
         format.js
+        seller = @comment.item.user
+        seller.notices.generate_by(:create_comment, @comment).save!
       else
         format.html { redirect_to item_path(item) } 
         format.js

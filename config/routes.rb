@@ -20,6 +20,12 @@ Rails.application.routes.draw do
   end
   resources :categories, only: :show
 
+  # マイページ
+  resources :settings, only: :index
+  namespace :settings do
+    resources :notices, only: :index
+  end
+
   # 管理画面
   namespace :admin do
     root 'homes#index'

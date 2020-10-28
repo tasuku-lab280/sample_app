@@ -20,17 +20,39 @@
           <li class="nav-item">
             <%= link_to 'いいね一覧', '#', class: 'nav-link text-dark' %>
           </li>
-          <li class="nav-item">
-            <%= link_to 'お知らせ', '#', class: 'nav-link text-dark' %>
+          <li class="nav-item dropdown">
+            <%= link_to settings_notices_path, class: 'nav-link dropdown-toggle text-dark', id: 'navbarDropdown' do %>
+              お知らせ
+            <% end %>
+            <div class="dropdown-menu mt-0" aria-labelledby="navbarDropdown">
+              <% @notices.each do |notice| %>
+                <%= link_to '#', id: "notice-#{notice.id}", class: "js-navbar-notification-dropdown-item dropdown-item" do %>
+                  <div class="d-flex align-items-center">
+                    <div class="text-center mr-3">
+                      <%# image = notice.sender_id? ? notice.sender_image.url(:thumb) : 'no-image.jpg' %>
+                      <%= image_tag 'no-image.jpg', style: 'height: 50px; width: 50px;' %>
+                    </div>
+                    <div>
+                      <div class="text-wrap">
+                        <p style="font-size: 0.8rem;"><%= raw notice.body %></p>
+                      </div>
+                      <div class="text-muted">
+                        <p style="font-size: 0.7rem;"><%= time_ago_in_words(notice.created_at) %>前</p>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
           </li>
           <li class="nav-item">
             <%= link_to 'やることリスト', '#', class: 'nav-link text-dark' %>
           </li>
           <li class="nav-item">
-            <%= link_to 'マイページ', '#', class: 'nav-link text-dark' %>
+            <%= link_to 'マイページ', settings_path, class: 'nav-link text-dark' %>
           </li>
           <li class="nav-item active">
-            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
+            <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link btn btn-danger btn-sm' %>
           </li>
         <% else %>
           <li class="nav-item">
