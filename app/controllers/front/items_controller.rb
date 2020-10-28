@@ -1,4 +1,4 @@
-class ItemsController < ApplicationController
+class Front::ItemsController < FrontController
   # 定数
   INDEX_PER_ITEMS = 50
   PERMITTED_ATTRIBUTES = %i(category_id name body price condition delivery_fee sales_status note)

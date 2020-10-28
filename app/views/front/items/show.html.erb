@@ -64,7 +64,7 @@
   </div>
 
   <% if user_signed_in? %>
-    <%= render partial: 'comments/comment_area', locals: { item: @item, comment: @comment, comments: @comments } %>
+    <%= render partial: 'front/comments/comment_area', locals: { item: @item, comment: @comment, comments: @comments } %>
   <% end %>
 
   <div class="col-md-8 offset-md-2 rounded mt-4 p-5" style="background-color: #FFFFFF;">

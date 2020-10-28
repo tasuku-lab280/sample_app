@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class Front::CommentsController < FrontController
   # 定数
   PERMITTED_ATTRIBUTES = %i(user_id item_id body)
 

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8 offset-md-2 rounded p-5" style="background-color: #FFFFFF;">
-    <%= render 'shared/flash_item' %>
+    <%= render 'front/shared/flash_item' %>
     <%= form_with model: @item, local: true do |f| %>
 
       <%= f.fields_for :item_images, @item.item_images.build do |ff| %>

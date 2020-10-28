@@ -1,4 +1,4 @@
-class CategoriesController < ApplicationController
+class Front::CategoriesController < FrontController
   # 定数
   INDEX_PER_ITEMS = 100
 

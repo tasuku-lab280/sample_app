@@ -1,4 +1,4 @@
-class Settings::NoticesController < SettingsController
+class Front::Settings::NoticesController < Front::SettingsController
   # 定数
   INDEX_PER_WORKS = 50
 

@@ -1,4 +1,6 @@
-class Users::SessionsController < Devise::SessionsController
+class Front::DeviseCustom::SessionsController < Devise::SessionsController
+  layout 'front'
+
   def new_guest
     user = User.guest
     sign_in user
