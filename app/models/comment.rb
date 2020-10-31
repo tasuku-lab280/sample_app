@@ -3,11 +3,15 @@
 # Table name: comments
 #
 #  id         :bigint           not null, primary key
-#  comment    :text(65535)      not null
+#  body       :text(65535)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  item_id    :integer          not null
 #  user_id    :integer          not null
+#
+# Indexes
+#
+#  index_comments_on_user_id_and_item_id  (user_id,item_id)
 #
 class Comment < ApplicationRecord
   # モジュール
@@ -40,7 +44,7 @@ class Comment < ApplicationRecord
                                       # length: { maximum: 255, allow_blank: true }
                                       # uniqueness: false
                                       # format: false
-  validates :comment,                 presence: true,
+  validates :body,                    presence: true,
                                       length: { maximum: 1024, allow_blank: true }
                                       # uniqueness: false
                                       # format: false

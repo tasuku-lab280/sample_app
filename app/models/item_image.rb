@@ -9,6 +9,10 @@
 #  updated_at :datetime         not null
 #  item_id    :integer
 #
+# Indexes
+#
+#  index_item_images_on_item_id  (item_id)
+#
 class ItemImage < ApplicationRecord
   # モジュール
   mount_uploader :image, ItemImageUploader

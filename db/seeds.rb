@@ -68,4 +68,23 @@ User.where(id: [1..15]).each do |user|
   user.items.create!(items)
 end
 
+## 通知
+user = User.find(1)
+sender = User.find(2)
+notices = Array.new(50) do |n|
+  atrs = if n % 3 != 0
+           [sender.id, sender.name]
+         else
+           [nil, I18n.t('application.name')]
+         end
+  {
+    user_id: user.id,
+    sender_id: atrs[0],
+    body: "<span class='font-weight-bold'>#{atrs[1]}</span>さんがサンプル通知#{n}を作成しました。",
+    url: '/',
+    read_at: (n % 4 == 0 ? nil : Time.current)
+  }
+end
+Notice.create!(notices)
+
 puts '初期データの追加が完了しました！'

@@ -5,13 +5,16 @@ ja:
       post: "投稿"
       item: "商品"
       item_image: "商品画像"
+      notice: "通知"
 
     attributes:
       user:
         name: "ユーザー名"
+
       post:
         content: "内容"
         created_at: "投稿日時"
+
       item:
         id: "ID"
         category_id: "カテゴリ"
@@ -25,7 +28,27 @@ ja:
         sales_status: "販売状況"
         image: "画像"
         note: "備考"
+
       item_image:
         id: "ID"
         image: "画像"
         note: "備考"
+
+      comment:
+        id: "ID"
+        user_id: "会員ID"
+        item_id: "商品ID"
+        body: "本文"
+
+      notice:
+        id: "ID"
+        user_id: "会員名"
+        sender_id: "元会員名"
+        message: "メッセージ"
+        url: "URL"
+        read_at: "既読日時"
+        note: "備考"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+        # ラベル
+        user_nickname: "会員名"

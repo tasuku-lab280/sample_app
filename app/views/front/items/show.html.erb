@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2 rounded p-5" style="background-color: #FFFFFF;">
+    <h3 class="text-center"><%= @item.name %></h3>
+
+    <div class="row mt-3 mb-4">
+      <div class="col-md-6">
+        <%= image_tag @item.first_image, class: 'img-thumbnail' %>
+      </div>
+      <div class="col-md-6">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th>出品者</th>
+              <td>
+                <%= link_to @item.user_name, '#' %>
+              </td>
+            </tr>
+            <tr>
+              <th>カテゴリ</th>
+              <td>
+                <%= link_to @item.category_name, category_path(@item.category) %>
+              </td>
+            </tr>
+            <tr>
+              <th>ブランド</th>
+              <td>
+                <%= link_to 'ブランド名が入ります', '#' %>
+              </td>
+            </tr>
+            <tr>
+              <th>商品の状態</th>
+              <td><%= @item.condition_text %></td>
+            </tr>
+            <tr>
+              <th>配送料の負担</th>
+              <td><%= @item.delivery_fee_text %></td>
+            </tr>
+            <tr>
+              <th>配送方法</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>配送元地域</th>
+              <td><%= @item.prefecture_text %></td>
+            </tr>
+            <tr>
+              <th>発送日の目安</th>
+              <td><%= @item.days_to_ship_text %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="text-center font-weight-bold" style="font-size: 2.5rem;">¥<%= @item.price %></p>
+
+    <div class="text-center mb-5">
+      <%= link_to '購入画面に進む', '#', class: 'btn btn-danger btn-lg btn-block' %>
+    </div>
+
+    <p><%= @item.body %></p>
+    <%= link_to 'いいね! 9', '#', class: 'badge badge-pill badge-secondary mt-5 p-3' %>
+
+  </div>
+
+  <% if user_signed_in? %>
+    <%= render partial: 'front/comments/comment_area', locals: { item: @item, comment: @comment, comments: @comments } %>
+  <% end %>
+
+  <div class="col-md-8 offset-md-2 rounded mt-4 p-5" style="background-color: #FFFFFF;">
+    ソーシャルシェアボタンが入ります。
+  </div>
+
+  <div class="col-md-8 offset-md-2 mt-4 p-0">
+    <%= link_to @item.user_name + 'さんのその他の出品', '#', class: 'font-weight-bold' %>
+    <div class="row mt-3">
+      <% @other_items.each do |other_item| %>
+        <div class="col-md-4 mb-3">
+          <%= link_to item_path(other_item) do %>
+            <div class="card">
+              <%= image_tag other_item.first_image, class: 'img-thumbnail', style: 'height: 200px' do %>
+              <% end %>
+              <div class="card-body">
+                <span class="badge badge-secondary">¥<%= other_item.price %></span>
+                <p class="card-title text-dark"><%= other_item.name %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

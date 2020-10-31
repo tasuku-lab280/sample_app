@@ -1,14 +1,12 @@
-/*
-*= require_tree .
-*= require_self
-*= require select2
-*= require select2-bootstrap
-*/
-
-@import "bootstrap/scss/bootstrap";
+@import "bootstrap";
 
 body {
   background-color: #f5f5f5;
+}
+
+// ヘッダー
+.dropdown:hover > .dropdown-menu {
+  display: block;
 }
 
 // エラーメッセージ
