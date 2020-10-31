@@ -8,10 +8,6 @@
     相手のことを考え丁寧なコメントを心がけましょう。不快な言葉遣いなどは利用制限や退会処分となることがあります。
   </p>
 
-  <%= form_with model: [item, comment], id: 'comment_form', data: { turbolinks: false }, remote: true do |f| %>
-    <%= f.hidden_field :item_id, value: item.id %>
-    <%= f.text_area :body, class: 'form-control', id: 'comment_form-body', rows: '5' %>
-    <%= f.submit 'コメントする', class: "btn btn-secondary btn-block mt-2" %>
-  <% end %>
+  <%= react_component("Comment", { item_id: item.id }) %>
 
 </div>
