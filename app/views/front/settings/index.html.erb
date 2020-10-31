@@ -1,7 +1,64 @@
-<div class="row">
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <%= link_to 'トップ', root_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    マイページ
+  </li>
+</ol>
+<div class="row px-5">
+
   <div class="col-md-4">
     <%= render 'front/settings/shared/setting_menu' %>
   </div>
+
   <div class="col-md-8">
+
+    <ul class="nav nav-tabs">
+
+      <li class="nav-item">
+        <a href="#notices" class="nav-link active" data-toggle="tab">お知らせ</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#todos" class="nav-link" data-toggle="tab">やることリスト</a>
+      </li>
+
+    </ul>
+
+    <div class="tab-content">
+
+      <div id="notices" class="tab-pane active">
+        <div class="list-group mb-4">
+          <% @notices.each do |notice| %>
+            <div class="list-group-item">
+              <div class="text-wrap">
+                <p style="font-size: 0.8rem;"><%= raw notice.body %></p>
+              </div>
+              <div class="text-muted">
+                <p style="font-size: 0.7rem;"><%= time_ago_in_words(notice.created_at) %>前</p>
+              </div>
+            </div>
+          <% end %>
+        </div> 
+        <%= link_to settings_notices_path, class: 'btn btn-secondary btn-block' do %>
+          一覧を見る
+        <% end %>
+      </div>
+
+      <div id="todos" class="tab-pane">
+        <div class="list-group mb-4">
+          <div class="list-group-item">
+            <div class="text-wrap">
+              <p style="font-size: 0.8rem;">本文テキスト</p>
+            </div>
+            <div class="text-muted">
+              <p style="font-size: 0.7rem;">3日前</p>
+            </div>
+          </div>
+        </div> 
+      </div>
+
+    </div>
   </div>
 </div>
