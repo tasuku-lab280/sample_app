@@ -43,6 +43,9 @@ Rails.application.routes.draw do
 
   # api
   namespace :api, {format: 'json'} do
+    resources :items, only: :index do
+      resources :comments
+    end
     resources :posts
     resources :chat_messages
   end
