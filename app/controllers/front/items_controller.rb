@@ -31,8 +31,10 @@ class Front::ItemsController < FrontController
   def show
     @item = Item.find(params[:id])
     @other_items = @item.user.items.order(created_at: :desc).limit(6)
-    @comment = Comment.new
-    @comments = @item.comments
+
+    API
+    comments = @item.comments
+    render json: comments
   end
 
 
