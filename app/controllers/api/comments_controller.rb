@@ -1,4 +1,6 @@
 class Api::CommentsController < ApplicationController
+  protect_from_forgery with: :null_session
+
   def index
     comment = Item.find(params[:item_id]).comments.joins(:user)
     .select("
@@ -12,7 +14,7 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    @comment = current_user.comments.build(comment_params)
+    @comment = Comment.new(comment_params)
     item = @comment.item
 
     if @comment.save

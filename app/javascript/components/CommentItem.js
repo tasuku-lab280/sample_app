@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 
-const CommentItem = () => {
+const CommentItem = (props) => {
   return (
     <div className="mb-5">
       <div className="d-flex comment-area-container">
@@ -10,13 +10,13 @@ const CommentItem = () => {
           <span className="badge badge-secondary mt-2">出品者</span>
         </div>
         <div>
-          <span className="font-weight-bold">名前</span>
+          <span className="font-weight-bold">{props.user_name}</span>
           <div className="comment-area mt-2">
             <div>
-              <p>コメント本文</p>
+              <p>{props.body}</p>
             </div>
             <div className="d-flex justify-content-between mt-4">
-              3日前
+              {props.created_at}前
               <a href="#">削除</a>
             </div>
           </div>
