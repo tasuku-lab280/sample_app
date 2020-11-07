@@ -64,7 +64,9 @@
   </div>
 
   <% if user_signed_in? %>
-    <%= render partial: 'front/comments/comment_area', locals: { item: @item, comment: @comment, comments: @comments } %>
+    <div class="col-md-8 offset-md-2 rounded mt-4 p-5" style="background-color: #FFFFFF;">
+      <%= react_component("Comment", { user_id: current_user.id, item_id: @item.id }) %>
+    </div>
   <% end %>
 
   <div class="col-md-8 offset-md-2 rounded mt-4 p-5" style="background-color: #FFFFFF;">

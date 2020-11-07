@@ -43,6 +43,7 @@ gem 'rack-cors'
 gem 'ancestry'
 gem 'carrierwave'
 gem 'annotate'
+gem 'react-rails'
 
 
 # 日本語化
