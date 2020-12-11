@@ -3,7 +3,6 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
     # 商品
     create_table :items do |t|
       t.integer           :user_id,          null: false
-      t.integer           :category_id,      null: false
       t.string            :name,             null: false
       t.text              :body,             null: false
       t.integer           :price,            null: false
@@ -15,7 +14,7 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
       t.text              :note
       t.timestamps                           null: false
     end
-    add_index :items, %i(user_id category_id)
+    add_index :items, :user_id
 
     # 商品画像
     create_table :item_images do |t|
@@ -28,10 +27,23 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
 
     # カテゴリ
     create_table :categories do |t|
-      t.string            :name,             null: false
-      t.text              :note
-      t.timestamps                           null: false
+      t.string     :seq_path, null: false
+      t.integer    :seq
+      t.string     :name,     null: false
+      t.string     :image
+      t.text       :detail
+      t.text       :note
+      t.timestamps            null: false
     end
+    add_index :categories, :seq_path
+
+    # 商品カテゴリ
+    create_table :item_categories do |t|
+      t.string     :category_id, null: false
+      t.string     :item_id,     null: false
+      t.timestamps               null: false
+    end
+    add_index :item_categories, %i(category_id item_id)
 
     # コメント
     create_table :comments do |t|
@@ -59,6 +71,7 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
     drop_table :items
     drop_table :item_images
     drop_table :categories
+    drop_table :item_categories
     drop_table :comments
     drop_table :notices
   end

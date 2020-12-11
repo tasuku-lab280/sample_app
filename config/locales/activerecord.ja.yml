@@ -6,6 +6,8 @@ ja:
       item: "商品"
       item_image: "商品画像"
       notice: "通知"
+      category: 'カテゴリ'
+      item_category: '商品カテゴリ'
 
     attributes:
       user:
@@ -17,7 +19,6 @@ ja:
 
       item:
         id: "ID"
-        category_id: "カテゴリ"
         name: "商品名"
         body: "本文"
         price: "価格"
@@ -28,6 +29,11 @@ ja:
         sales_status: "販売状況"
         image: "画像"
         note: "備考"
+        # ラベル
+        order:
+          price_asc: '価格の安い順'
+          price_desc: '価格の高い順'
+          created_at_desc: '出品の新しい順'
 
       item_image:
         id: "ID"
@@ -52,3 +58,21 @@ ja:
         updated_at: "更新日時"
         # ラベル
         user_nickname: "会員名"
+
+      category:
+        id: 'ID'
+        seq_path: '連番パス'
+        seq: '連番'
+        name: 'カテゴリ名'
+        image: '画像'
+        detail: '詳細'
+        note: '備考'
+        created_at: '作成日時'
+        updated_at: '更新日時'
+        # ラベル
+        parent_seq_path: '親カテゴリ'
+        # restrict_with_error
+        item_categories: '商品カテゴリ'
+
+      item_category:
+        category_id: 'カテゴリ名'

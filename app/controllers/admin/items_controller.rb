@@ -52,7 +52,6 @@ class Admin::ItemsController < AdminController
     one = one.where('items.body LIKE ?', '%' + params[:body] + '%') if params[:body].present?
     one = one.where('items.price LIKE ?', '%' + params[:price] + '%') if params[:price].present?
     # one = one.where(condition: params[:condition]) if params[:condition].present?
-    # one = one.joins(:category).where(categories: { id: params[:category_parent] }) if params[:category_parent].present?
 
     # # ソート
     # one = one.order(created_at: :desc) if params[:sort_order] == 'created_desc'

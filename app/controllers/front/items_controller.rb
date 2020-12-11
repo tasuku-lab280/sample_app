@@ -6,6 +6,7 @@ class Front::ItemsController < FrontController
 
 
   # フック
+  before_action :set_category, only: :index
   before_action :authenticate_user!, only: [:new, :create]
 
 
@@ -42,8 +43,16 @@ class Front::ItemsController < FrontController
     
     # 絞込
     one = one.where('items.name LIKE ?', '%' + params[:keyword] + '%') if params[:keyword].present?
+    one = one.joins(:item_categories).where(item_categories: { category_id: @category.descendants }) if params[:category_id].present?
+    if params[:min_price].present?
+      one = one.where('items.price >= ?', params[:min_price])
+    end
+    if params[:max_price].present?
+      one = one.where('items.price <= ?', params[:max_price])
+    end
     one = one.where(condition: params[:condition]) if params[:condition].present?
-    one = one.joins(:category).where(categories: { id: params[:category_parent] }) if params[:category_parent].present?
+    one = one.where(delivery_fee: params[:delivery_fee]) if params[:delivery_fee].present?
+    one = one.where(sales_status: params[:sales_status]) if params[:sales_status].present?
 
     # ソート
     one = one.order(created_at: :desc) if params[:sort_order] == 'created_desc'
@@ -55,5 +64,9 @@ class Front::ItemsController < FrontController
 
   def item_params
     params.require(:item).permit(*PERMITTED_ATTRIBUTES, item_images_attributes: [:id, :item_id, :image])
+  end
+
+  def set_category
+    @category = Category.find(params[:category_id]) if params[:category_id].present?
   end
 end

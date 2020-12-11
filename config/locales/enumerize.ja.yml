@@ -60,11 +60,12 @@ ja:
         reading: "読書"
     item:
       condition:
-        good: "良い"
-        somewhat_good: "やや良い"
-        normal: "普通"
-        somewhat_bad: "やや悪い"
-        bad: "悪い"
+        new_unused: '新品未使用'
+        nearly_unused: '未使用に近い'
+        no_dirty: '目立った傷や汚れなし'
+        somewhat_dirty: 'やや傷や汚れあり'
+        dirty: '傷や汚れあり'
+        bad: '全体的に状態が悪い'
       delivery_fee:
         cash_delivery: "着払い(購入者負担)"
         postage_included: "送料込み(出品者負担)"

@@ -18,7 +18,9 @@
             <tr>
               <th>カテゴリ</th>
               <td>
-                <%= link_to @item.category_name, category_path(@item.category) %>
+                <% @item.categories.each do |category| %>
+                  <%= link_to category.name, category_path(category) %>
+                <% end %>
               </td>
             </tr>
             <tr>

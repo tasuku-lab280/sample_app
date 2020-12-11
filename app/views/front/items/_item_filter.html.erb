@@ -1,70 +1,125 @@
 <div class="col-sm-4 px-5">
 
   <%= form_with url: items_path, method: "get", class: 'form-group', local: true do |f| %>
-    <% order_options = options_for_select({
-        '並び替え': '',
-        '価格の安い順': 'price_asc',
-        '価格の高い順': 'price_desc',
-        '出品の新しい順': 'created_desc',
-        'いいねの多い順': 'like_desc',
-      }, params[:sort_order])
+    <%= hidden_field_tag(:sort_order, params[:sort_order], id: 'item-order') %>
+    <%= hidden_field_tag(:min_price, params[:min_price]) %>
+    <%= hidden_field_tag(:max_price, params[:max_price]) %>
+
+    <%# 並び替え %>
+    <%
+      collection = Item::FRONT_ORDERS.keys.map { |order_name| [t("activerecord.attributes.item.order.#{order_name}"), order_name] }
+      options = options_for_select(collection, params[:sort_order])
     %>
-    <%= f.select :sort_order, order_options, {}, class: 'form-control' %>
-    <%= f.submit '適用', class: "btn btn-primary btn-sm mt-2" %>
-  <% end %>
+    <%= select_tag(:item_order, options, prompt: '並び替え', id: 'item-order-select', class: 'form-control mb-4') %>
+    <%# END 並び替え %>
 
-  <div class="rounded p-3" style="background-color: #FFFFFF;">
-    <p class="font-weight-bold">詳細検索</p>
+    <div class="rounded p-3" style="background-color: #FFFFFF;">
+      <p class="font-weight-bold">詳細検索</p>
 
-    <%= form_with url: items_path, method: "get", class: 'form-group', local: true do |f| %>
-      <%= hidden_field_tag(:sort_order, params[:sort_order]) %>
-
+      <%# キーワード %>
       <div class="form-group">
         <span class="font-weight-bold small">キーワードを追加する</span>
-        <%= f.text_field :keyword, value: params[:keyword], class: 'form-control' %>
+        <%= f.text_field :keyword, value: params[:keyword], placeholder: '例）値下げ',class: 'form-control' %>
       </div>
+      <%# END キーワード %>
 
+      <%# カテゴリ %>
       <div class="form-group mt-4">
         <span class="font-weight-bold small">カテゴリを選択する</span>
-        <% categories_options = options_from_collection_for_select(Category.all, :id, :name, params[:category_parent]) %>
-        <%= f.select :category_parent, categories_options, { include_blank: 'すべて' }, class: 'form-control' %>
+        <% categories_options = options_from_collection_for_select(root_categories, :id, :name, params[:category_id]) %>
+        <%= f.select :category_id, categories_options, { include_blank: 'すべて' }, class: 'form-control' %>
       </div>
+      <%# END カテゴリ %>
 
+      <%# @TODO ブランド %>
       <div class="form-group mt-4">
         <span class="font-weight-bold small">ブランド名から探す</span>
         <input class="form-control" placeholder="例) シャネル">
       </div>
+      <%# END ブランド %>
 
+      <%# @TODO サイズ %>
       <div class="form-group mt-4">
         <span class="font-weight-bold small">サイズを選択する</span>
         <select class="form-control">
           <option>全て</option>
         </select>
       </div>
+      <%# END サイズ %>
 
-      <div class="form-group mt-4">
-        <span class="font-weight-bold small">価格</span>
-        <select class="form-control">
-          <option>選択して下さい</option>
-        </select>
+      <%# @TODO 価格 %>
+      <span class="font-weight-bold small">価格</span>
+      <div class="d-flex">
+        <div>
+          <%= f.number_field :min_price, value: params[:min_price], placeholder: '¥ Min', class: 'form-control' %>
+        </div>
+        <div class="mx-1">
+          <div> ~ </div>
+        </div>
+        <div>
+          <%= f.number_field :max_price, value: params[:max_price], placeholder: '¥ Max',class: 'form-control' %>
+        </div>
       </div>
+      <%# END 価格 %>
 
+      <%# 商品の状態 %>
       <div class="form-group mt-4">
         <span class="font-weight-bold small">商品の状態</span>
         <div class="row">
           <% Item.condition.options.each do |key, value| %>
-            <div class="col-md-6">
-              <%= f.check_box :condition, { multiple: true, id: "condition_#{value}" }, value, nil %>
-              <%= f.label :condition, key, value: value %>
+            <div class="d-flex col-md-6">
+              <div class="mr-2">
+                <% checked = params[:condition].try!(:include?, value) %>
+                <%# :オブジェクト名, { オプション }, checked_value, unchecked_value %>
+                <%= f.check_box :condition, { checked: checked, multiple: true, id: "condition_#{value}" }, value, false %>
+              </div>
+              <p class="text-wrap mb-0"><%= f.label :condition, key, value: value %></p>
             </div>
           <% end %>
         </div>
       </div>
+      <%# END 商品の状態 %>
 
-      <%= f.submit '適用', class: "btn btn-primary btn-sm mt-2" %>
+      <%# 配送料の負担 %>
+      <div class="form-group mt-4">
+        <span class="font-weight-bold small">配送料の負担</span>
+        <div class="row">
+          <% Item.delivery_fee.options.each do |key, value| %>
+            <div class="d-flex col-md-6">
+              <div class="mr-2">
+                <% checked = params[:delivery_fee].try!(:include?, value) %>
+                <%# :オブジェクト名, { オプション }, checked_value, unchecked_value %>
+                <%= f.check_box :delivery_fee, { checked: checked, multiple: true, id: "delivery_fee_#{value}" }, value, false %>
+              </div>
+              <p class="text-wrap mb-0"><%= f.label :delivery_fee, key, value: value %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <%# END 配送料の負担 %>
 
-    <% end %>
+      <%# 販売状況 %>
+      <div class="form-group mt-4">
+        <span class="font-weight-bold small">販売状況</span>
+        <div class="row">
+          <% Item.sales_status.options.each do |key, value| %>
+            <div class="d-flex col-md-6">
+              <div class="mr-2">
+                <% checked = params[:sales_status].try!(:include?, value) %>
+                <%# :オブジェクト名, { オプション }, checked_value, unchecked_value %>
+                <%= f.check_box :sales_status, { checked: checked, multiple: true, id: "sales_status_#{value}" }, value, false %>
+              </div>
+              <p class="text-wrap mb-0"><%= f.label :sales_status, key, value: value %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <%# END 販売状況 %>
 
-  </div>
+      <%= f.submit '適用', class: "btn btn-primary" %>
+      <%= f.button 'クリア', type: :reset, class: 'btn btn-secondary' %>
+    </div>
+
+  <% end %>
 
 </div>

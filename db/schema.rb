@@ -13,10 +13,15 @@
 ActiveRecord::Schema.define(version: 2020_10_08_000000) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "seq_path", null: false
+    t.integer "seq"
     t.string "name", null: false
+    t.string "image"
+    t.text "detail"
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["seq_path"], name: "index_categories_on_seq_path"
   end
 
   create_table "chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -51,6 +56,14 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["user_id", "item_id"], name: "index_comments_on_user_id_and_item_id"
   end
 
+  create_table "item_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "category_id", null: false
+    t.string "item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id", "item_id"], name: "index_item_categories_on_category_id_and_item_id"
+  end
+
   create_table "item_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "item_id"
     t.string "image", null: false
@@ -62,7 +75,6 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "category_id", null: false
     t.string "name", null: false
     t.text "body", null: false
     t.integer "price", null: false
@@ -74,7 +86,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id", "category_id"], name: "index_items_on_user_id_and_category_id"
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "notices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|

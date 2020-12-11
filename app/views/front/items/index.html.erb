@@ -32,3 +32,15 @@
 
   </div>
 </div>
+
+<script>
+  jQuery(function($){
+    // 並び替えselect
+    $('#item-order-select').on('change', function(event) {
+      var selected = $(this).val();
+      var $itemOrder = $('#item-order');
+      $itemOrder.val(selected);
+      $itemOrder.closest('form').submit();
+    });
+  });
+</script>

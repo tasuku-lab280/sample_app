@@ -29,6 +29,7 @@ class ItemImage < ApplicationRecord
 
 
   # スコープ
+  scope :only_thumbnail, -> { where(id: group(:item_id).having(arel_table[:id].minimum)) }
 
 
   # フック
