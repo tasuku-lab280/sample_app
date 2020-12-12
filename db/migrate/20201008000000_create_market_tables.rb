@@ -1,5 +1,36 @@
 class CreateMarketTables < ActiveRecord::Migration[6.0]
   def up
+    # クレジットカード
+    create_table :creditcards do |t|
+      t.integer    :user_id,         null: false
+      t.string     :status,          null: false
+      t.string     :brand,           null: false
+      t.string     :expiration_date, null: false
+      t.string     :masked_number,   null: false
+      t.text       :note
+      t.datetime   :deleted_at
+      t.timestamps                   null: false
+    end
+    add_index :creditcards, :user_id
+
+    # 配送先
+    create_table :destinations do |t|
+      t.integer    :user_id,         null: false
+      t.string     :last_name,       null: false, limit: 32
+      t.string     :first_name,      null: false, limit: 32
+      t.string     :last_name_kana,  null: false, limit: 32
+      t.string     :first_name_kana, null: false, limit: 32
+      t.string     :postal_code,     null: false
+      t.integer    :prefecture,      null: false
+      t.string     :address1,        null: false
+      t.string     :address2,        null: false
+      t.string     :address3
+      t.string     :tel
+      t.text       :note
+      t.timestamps                   null: false
+    end
+    add_index :destinations, :user_id
+
     # 商品
     create_table :items do |t|
       t.integer           :user_id,          null: false
@@ -68,6 +99,8 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
   end
 
   def down
+    drop_table :creditcards
+    drop_table :destinations
     drop_table :items
     drop_table :item_images
     drop_table :categories

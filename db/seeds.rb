@@ -5,6 +5,7 @@ Translatable = Struct.new(:klass) do
 end
 
 USERS = 20
+CREDIT_CARDS_PER_USER = 3
 CATEGORIES = 5
 ITEMS = 50
 ITEM_CATEGORIES = 50
@@ -19,6 +20,24 @@ USERS.times do |n|
                email: email,
                password: password,
                password_confirmation: password)
+end
+
+
+# クレジットカード
+CC = Translatable.new(Creditcard)
+counter = 0
+User.all.each do |u|
+  credit_cards = (1..CREDIT_CARDS_PER_USER).map do |i|
+    counter += 1
+    {
+      user_id:         u.id,
+      status:          Creditcard.status.values[i % 2],
+      brand:           %w(visa mastercard amex)[i % 2],
+      expiration_date: (Time.current + counter.months).strftime('%m/%y'),
+      masked_number:   i.to_s.rjust(12, rand(0..9).to_s).ljust(16, 'X'),
+    }
+  end
+  CC.create!(credit_cards)
 end
 
 

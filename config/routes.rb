@@ -23,17 +23,16 @@ Rails.application.routes.draw do
     # 商品
     resources :items, shallow: true do
       resources :comments, only: [:create, :destroy]
-      # 購入
-      resources :payments, shallow: true do
-        collection do
-          get 'confirm'
-          get 'creditcard'
-          get 'destination'
-          patch 'confirm'
-          patch 'update'
-          get 'finish'
-        end
-      end
+    end
+
+    # 購入
+    namespace :payments do
+      get 'confirm'
+      post 'confirm'
+      patch 'confirm'
+      get 'finish'
+      resources :creditcards, only: %w(index new create destroy)
+      resources :destinations, only: %w(index new create destroy)
     end
 
     # カテゴリ

@@ -56,6 +56,37 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["user_id", "item_id"], name: "index_comments_on_user_id_and_item_id"
   end
 
+  create_table "creditcards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "status", null: false
+    t.string "brand", null: false
+    t.string "expiration_date", null: false
+    t.string "masked_number", null: false
+    t.text "note"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_creditcards_on_user_id"
+  end
+
+  create_table "destinations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "last_name", limit: 32, null: false
+    t.string "first_name", limit: 32, null: false
+    t.string "last_name_kana", limit: 32, null: false
+    t.string "first_name_kana", limit: 32, null: false
+    t.string "postal_code", null: false
+    t.integer "prefecture", null: false
+    t.string "address1", null: false
+    t.string "address2", null: false
+    t.string "address3"
+    t.string "tel"
+    t.text "note"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_destinations_on_user_id"
+  end
+
   create_table "item_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "category_id", null: false
     t.string "item_id", null: false

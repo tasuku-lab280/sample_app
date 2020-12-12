@@ -1,10 +1,5 @@
 class Front::PaymentsController < FrontMemberController
   layout 'front_modal'
-  # 定数
-
-
-  # フック
-
 
   # メソッド
   def confirm
