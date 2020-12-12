@@ -1,6 +1,19 @@
-20.times do |n|
+Translatable = Struct.new(:klass) do
+  def t_l; klass.model_name.human; end
+  def t_ar(attr); klass.human_attribute_name(attr); end
+  def create!(arg); klass.create!(arg); end
+end
+
+USERS = 20
+CATEGORIES = 5
+ITEMS = 50
+ITEM_CATEGORIES = 50
+
+
+## 会員
+USERS.times do |n|
   name  = "会員#{n+1}"
-  email = "example-#{n+1}@example.org"
+  email = "dev+user#{n+1}@example.com"
   password = "password"
   User.create!(name:  name,
                email: email,
@@ -8,23 +21,6 @@
                password_confirmation: password)
 end
 
-
-# 商品
-User.where(id: [1..15]).each do |user|
-  items = (1..10).map do |i|
-    {
-      name: "サンプル商品#{i+1}",
-      body: "サンプル本文#{i+1}",
-      price: i * 1000,
-      condition: Item.condition.values.sample,
-      delivery_fee: Item.delivery_fee.values.sample,
-      prefecture: Item.prefecture.values.sample,
-      days_to_ship: Item.days_to_ship.values.sample,
-      sales_status: Item.sales_status.values.sample,
-    }
-  end
-  user.items.create!(items)
-end
 
 ## 通知
 user = User.find(1)
@@ -45,15 +41,6 @@ notices = Array.new(50) do |n|
 end
 Notice.create!(notices)
 
-Translatable = Struct.new(:klass) do
-  def t_l; klass.model_name.human; end
-  def t_ar(attr); klass.human_attribute_name(attr); end
-  def create!(arg); klass.create!(arg); end
-end
-
-CATEGORIES = 5
-ITEMS = 5
-ITEM_CATEGORIES = 5
 
 # カテゴリ
 tree1 = [1, 2, 3, 4]
@@ -71,11 +58,12 @@ trees.each do |tree|
   CG.create!(categories)
 end
 
+
 # 商品
 I = Translatable.new(Item)
 items = (1..ITEMS).map do |i|
   item = {
-    user_id:          "#{i}".to_i,
+    user_id:          rand(1..USERS),
     name:             "#{I.t_l}#{i}",
     body:             'text',
     price:            rand(1..10)*500,
@@ -87,6 +75,7 @@ items = (1..ITEMS).map do |i|
   }
 end
 I.create!(items)
+
 
 # 商品カテゴリ
 category_ids = Category.pluck(:id)

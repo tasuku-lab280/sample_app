@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2 rounded p-5" style="background-color: #FFFFFF;">
+    <div class="col-md-8 offset-md-2">
+      <h2 class="text-center">購入内容の確認</h2>
+
+      <hr class="my-5">
+
+      <div class="row">
+        <div class="col-md-3">
+          <%= image_tag @item.thumbnail, class: 'card-img', style: 'width: 70px; height: 70px;' %>
+        </div>
+        <div class="col-md-9">
+          <p><%= @item.name %></p>
+          <p class="text-right">送料込み(税込) <span class="font-weight-bold">¥<%= @item.price %></span></p>
+        </div>
+      </div>
+
+      <hr class="my-5">
+
+      <div class="d-flex justify-content-between">
+        <div><span class="font-weight-bold">支払い金額</span></div>
+        <div><span class="font-weight-bold">¥<%= @item.price %></span></div>
+      </div>
+
+      <hr class="my-5">
+
+      <div class="font-weight-bold mb-3">支払い方法</div>
+      <%= link_to '+ 登録してください', '#' %>
+
+      <hr class="my-5">
+
+      <div class="font-weight-bold mb-3">配送先</div>
+      <%= link_to '+ 登録してください', '#' %>
+
+      <hr class="my-5">
+
+      <span class="text-danger">配送先と支払い方法の入力を完了してください。</span>
+      <%#= f.submit '出品する', class: "btn btn-primary btn-block mt-5" %>
+      <button class="btn btn-danger btn-block mt-4">購入する</button>
+
+    </div>
+  </div>
+</div>

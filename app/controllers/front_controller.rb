@@ -1,5 +1,5 @@
 class FrontController < ApplicationController
-  layout "front"
+  layout 'front'
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_notices, if: :user_signed_in?
 
