@@ -23,7 +23,11 @@ class Front::Payments::CreditcardsController < FrontMemberController
       flash[:alert] = 'クレジットカードを削除できませんでした。'
     end
 
-    redirect_to action: :new and return if creditcards.empty?
-    redirect_to action: :index
+    # クレカが全て論理削除されたらクレカ新規登録画面に遷移
+    if creditcards.where(deleted_at: nil).empty?
+      redirect_to action: :new
+    else
+      redirect_to action: :index
+    end
   end
 end
