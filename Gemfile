@@ -44,6 +44,7 @@ gem 'ancestry'
 gem 'carrierwave'
 gem 'annotate'
 gem 'react-rails'
+gem 'stripe'
 
 
 # 日本語化

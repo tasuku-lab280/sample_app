@@ -25,15 +25,19 @@
       <hr class="my-5">
 
       <div class="font-weight-bold mb-3">支払い方法</div>
-      <% if current_user.creditcards.exists? %>
+      <% if current_user.selected_creditcard_id.present? %>
         <div>
-          クレジットカード情報が入ります
+          <div>
+            <div><%= @selected_creditcard.masked_number %></div>
+            <div>有効期限 <%= @selected_creditcard.expiration_date %></div>
+            <div><%= @selected_creditcard.brand %></div>
+          </div>
         </div>
         <div class="mt-3">
-          <%= link_to '変更する >', payments_creditcards_path %>
+          <%= link_to '変更する >', payments_creditcards_path(item_id: @item.id) %>
         </div>
       <% else %>
-        <%= link_to '+ 登録してください', new_payments_creditcard_path %>
+        <%= link_to '+ 登録してください', new_payments_creditcard_path(item_id: @item.id) %>
       <% end %>
 
       <hr class="my-5">
