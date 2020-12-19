@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2 rounded p-5" style="background-color: #FFFFFF;">
+    <div class="col-md-8 offset-md-2">
+      <h2 class="text-center">発送元・お届け先住所入力</h2>
+
+      <hr class="my-5">
+
+      <%= form_with model: @destinations, url: payments_confirm_path, method: :post, local: true do |f| %>
+
+        <div class="form-group">
+          <label>お名前</label>
+          <span class="badge badge-danger">必須</span>
+          <%= f.text_field :last_name, class: 'form-control', placeholder: '例）山田' %>
+          <%= f.text_field :first_name, class: 'form-control mt-3', placeholder: '例）太郎' %>
+        </div>
+
+        <div class="form-group">
+          <label>お名前カナ</label>
+          <span class="badge badge-danger">必須</span>
+          <%= f.text_field :last_name_kana, class: 'form-control', placeholder: '例）ヤマダ' %>
+          <%= f.text_field :first_name_kana, class: 'form-control mt-3', placeholder: '例）タロウ' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :postal_code %>
+          <span class="badge badge-danger">必須</span>
+          <%= f.text_field :postal_code, class: 'form-control', placeholder: '例）123-4567' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :prefecture %>
+          <span class="badge badge-danger">必須</span>
+          <%= f.select :prefecture, Item.prefecture.options, { include_blank: '選択してください' }, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :address1 %>
+          <span class="badge badge-danger">必須</span>
+          <%= f.text_field :address1, class: 'form-control', placeholder: '例）東京都新宿区' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :address2 %>
+          <span class="badge badge-danger">必須</span>
+          <%= f.text_field :address2, class: 'form-control', placeholder: '例）0-00-00' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :address3 %>
+          <span class="badge badge-secondary">任意</span>
+          <%= f.text_field :address3, class: 'form-control', placeholder: '例）柳ビル103' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :tel %>
+          <span class="badge badge-secondary">任意</span>
+          <%= f.text_field :tel, class: 'form-control', placeholder: '例）00000000000' %>
+        </div>
+
+        <%= f.submit '登録する', class: "btn btn-danger btn-block mt-5" %>
+      <% end %>
+    </div>
+  </div>
+</div>

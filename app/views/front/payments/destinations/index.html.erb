@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2 rounded p-5" style="background-color: #FFFFFF;">
+    <div class="col-md-8 offset-md-2">
+      <h2 class="text-center">配送先</h2>
+
+      <hr class="my-5">
+
+      <%= form_with model: current_user, url: destination_update_payments_destinations_path, method: 'patch', local: true do |f| %>
+        <% @destinations.each do |destination| %>
+          <%= hidden_field_tag :item_id, @item.id %>
+          <div class="d-flex justify-content-between mb-4">
+            <div class="d-flex">
+              <div class="mr-3">
+                <% check = destination.id == current_user.selected_destination_id %>
+                <%= f.radio_button :selected_destination_id, destination.id, id: destination.id, checked: check %>
+              </div>
+              <div>
+                <div>〒<%= destination.postal_code %></div>
+                <div><%= destination.full_address %></div>
+                <div><%= destination.full_name %></div>
+              </div>
+            </div>
+            <div>
+              <%= link_to '削除する', payments_destination_path(destination, item_id: @item.id), method: :delete, class: 'btn btn-outline-danger' %>
+            </div>
+          </div>
+        <% end %>
+
+        <%= link_to '+ 配送先を追加', new_payments_destination_path(item_id: @item.id) %>
+
+        <hr class="my-5">
+
+        <%= f.submit '選択した配送先を使う', class: "btn btn-danger btn-block mt-4" %>
+      <% end %>
+
+      <p class="text-center mt-4"><%= link_to 'もどる', :back %></p>
+
+    </div>
+  </div>
+</div>

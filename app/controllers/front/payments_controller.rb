@@ -6,7 +6,10 @@ class Front::PaymentsController < FrontMemberController
   # メソッド
   def confirm
     if current_user.selected_creditcard_id.present?
-      @selected_creditcard = Creditcard.without_deleted.find(current_user.selected_creditcard_id)
+      @selected_creditcard = current_user.creditcards.without_deleted.find(current_user.selected_creditcard_id)
+    end
+    if current_user.selected_destination_id.present?
+      @selected_destination = current_user.destinations.find(current_user.selected_destination_id)
     end
   end
 

@@ -35,7 +35,11 @@ Rails.application.routes.draw do
           patch 'card_update'
         end
       end
-      resources :destinations, only: %w(index new create update destroy)
+      resources :destinations, only: %w(index new create destroy) do
+        collection do
+          patch 'destination_update'
+        end
+      end
     end
 
     # カテゴリ
