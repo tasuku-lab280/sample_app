@@ -1,0 +1,10 @@
+<tr>
+  <th scope="row"><%= item.id %></th>
+  <td><%= item.name %></td>
+  <td><%= item.body %></td>
+  <td><%= item.price %></td>
+  <td><%= item.condition_text %></td>
+  <td><%= item.delivery_fee_text %></td>
+  <td><%= item.sales_status_text %></td>
+  <td><%= link_to '詳細', admin_item_path(item), class: 'btn btn-primary btn-sm' %></td>
+</tr>

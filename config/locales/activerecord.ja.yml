@@ -1,8 +1,114 @@
 ja:
   activerecord:
+    models:
+      user: '会員'
+      creditcard: 'クレジットカード'
+      destination: '配送先'
+      post: '投稿'
+      item: '商品'
+      item_image: '商品画像'
+      notice: '通知'
+      category: 'カテゴリ'
+      item_category: '商品カテゴリ'
+
     attributes:
       user:
         name: 'ユーザー名'
+
+      creditcard:
+        id: ID
+        user_id: '会員ID'
+        status: 'ステータス'
+        brand: 'ブランド'
+        expiration_date: '有効期限'
+        masked_number: '伏字番号'
+        note: '備考'
+        deleted_at: '削除日時'
+        created_at: '作成日時'
+        updated_at: '更新日時'
+        # ラベル
+        user_name: '会員名'
+
+      destination:
+        id: ID
+        user_id: '会員名'
+        last_name: '姓'
+        first_name: '名'
+        last_name_kana: '姓(カナ)'
+        first_name_kana: '名(カナ)'
+        postal_code: '郵便番号'
+        prefecture: '都道府県'
+        address1: '住所1(市区町村)'
+        address2: '住所2(番地)'
+        address3: '住所3(ビル名等)'
+        tel: '電話番号'
+        note: '備考'
+        created_at: '作成日時'
+        updated_at: '更新日時'
+        # ラベル
+        user_name: '会員名'
+        full_name_and_kana: '姓名・カナ'
+
       post:
         content: '内容'
         created_at: '投稿日時'
+
+      item:
+        id: 'ID'
+        name: '商品名'
+        body: '本文'
+        price: '価格'
+        condition: '商品の状態'
+        delivery_fee: '配送料の負担'
+        prefecture: '発送元の地域'
+        days_to_ship: '発送までの日数'
+        sales_status: '販売状況'
+        image: '画像'
+        note: '備考'
+        # ラベル
+        order:
+          price_asc: '価格の安い順'
+          price_desc: '価格の高い順'
+          created_at_desc: '出品の新しい順'
+
+      item_image:
+        id: 'ID'
+        image: '画像'
+        note: '備考'
+
+      comment:
+        id: 'ID'
+        user_id: '会員ID'
+        item_id: '商品ID'
+        body: '本文'
+
+      notice:
+        id: 'ID'
+        user_id: '会員名'
+        sender_id: '元会員名'
+        message: 'メッセージ'
+        url: 'URL'
+        read_at: '既読日時'
+        note: '備考'
+        created_at: '作成日時'
+        updated_at: '更新日時'
+        # ラベル
+        user_nickname: '会員名'
+
+      category:
+        id: 'ID'
+        seq_path: '連番パス'
+        seq: '連番'
+        name: 'カテゴリ名'
+        image: '画像'
+        detail: '詳細'
+        note: '備考'
+        created_at: '作成日時'
+        updated_at: '更新日時'
+        # ラベル
+        parent_seq_path: '親カテゴリ'
+        # restrict_with_error
+        item_categories: '商品カテゴリ'
+
+      item_category:
+        category_id: 'カテゴリ名'

@@ -1,0 +1,14 @@
+<ol class="breadcrumb mt-3">
+  <li class="breadcrumb-item"><%= link_to 'ホーム', admin_root_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">商品一覧</li>
+</ol>
+
+<%= render 'admin/shared/form' %>
+
+<%= link_to "一覧をダウンロード", admin_items_path(format: :csv), class: "btn btn-success mt-3" %>
+
+<%= render 'admin/shared/table' %>
+
+<!-- paginate -->
+<%= paginate @items %>
+<!-- end paginate -->

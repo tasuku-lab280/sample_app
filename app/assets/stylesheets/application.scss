@@ -1,11 +1,22 @@
-/*
-*= require_tree .
-*= require_self
-*= require select2
-*= require select2-bootstrap
-*/
+@import "bootstrap";
 
-@import "bootstrap/scss/bootstrap";
+body {
+  background-color: #f5f5f5;
+}
+
+// ヘッダー
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+
+// エラーメッセージ
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
 
 // ログイン画面
 
@@ -24,7 +35,6 @@
 .alert-alert {
   @extend .alert-danger;
 }
-
 
 #chat_message-container {
   max-width: 768px;
@@ -51,7 +61,6 @@ footer {
   resize: none;
 }
 
-
 /* モダール */
 .modal {
   display: none;
@@ -62,9 +71,9 @@ footer {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
-  
+
 .modal-content {
   background-color: white;
   width: 600px;
@@ -79,5 +88,26 @@ footer {
 
 .added-user-item {
   background-color: #afeeee;
-  border-radius: 5px;;
+  border-radius: 5px;
+}
+
+// コメント
+.comment-area {
+  width: 550px;
+  padding: 20px;
+  background-color: #eef0f4;
+  border-radius: 20px;
+}
+
+// 管理画面
+.admin-sidebar {
+  ul {
+    li {
+      list-style: none;
+
+      span {
+        color: white;
+      }
+    }
+  }
 }

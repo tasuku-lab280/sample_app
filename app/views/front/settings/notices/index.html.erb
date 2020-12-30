@@ -1,0 +1,19 @@
+<div class="row px-5">
+  <div class="col-md-4">
+    <%= render 'front/settings/shared/setting_menu' %>
+  </div>
+  <div class="col-md-8">
+    <div class="list-group mb-4">
+      <% @notices.each do |notice| %>
+        <div class="list-group-item">
+          <div class="text-wrap">
+            <p style="font-size: 0.8rem;"><%= raw notice.body %></p>
+          </div>
+          <div class="text-muted">
+            <p style="font-size: 0.7rem;"><%= time_ago_in_words(notice.created_at) %>前</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

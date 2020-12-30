@@ -1,0 +1,17 @@
+<table class="table table-bordered mt-3">
+  <thead>
+    <tr>
+      <th scope="col"><%= Item.human_attribute_name :id %></th>
+      <th scope="col"><%= Item.human_attribute_name :name %></th>
+      <th scope="col"><%= Item.human_attribute_name :body %></th>
+      <th scope="col"><%= Item.human_attribute_name :price %></th>
+      <th scope="col"><%= Item.human_attribute_name :condition %></th>
+      <th scope="col"><%= Item.human_attribute_name :delivery_fee %></th>
+      <th scope="col"><%= Item.human_attribute_name :sales_status %></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: 'item', collection: @items %>
+  </tbody>
+</table>
