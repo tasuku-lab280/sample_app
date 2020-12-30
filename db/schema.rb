@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_10_08_000000) do
 
-  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "seq_path", null: false
     t.integer "seq"
     t.string "name", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["seq_path"], name: "index_categories_on_seq_path"
   end
 
-  create_table "chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "chat_room_id", null: false
     t.integer "user_id", null: false
     t.text "content", null: false
@@ -33,13 +33,13 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["chat_room_id", "user_id"], name: "index_chat_messages_on_chat_room_id_and_user_id"
   end
 
-  create_table "chat_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "chat_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "chat_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "chat_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "chat_room_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["chat_room_id", "user_id"], name: "index_chat_users_on_chat_room_id_and_user_id"
   end
 
-  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "item_id", null: false
     t.text "body", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["user_id", "item_id"], name: "index_comments_on_user_id_and_item_id"
   end
 
-  create_table "creditcards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "creditcards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "status", null: false
     t.string "brand", null: false
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["user_id"], name: "index_creditcards_on_user_id"
   end
 
-  create_table "destinations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "destinations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "last_name", limit: 32, null: false
     t.string "first_name", limit: 32, null: false
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["user_id"], name: "index_destinations_on_user_id"
   end
 
-  create_table "item_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "item_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "category_id", null: false
     t.string "item_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["category_id", "item_id"], name: "index_item_categories_on_category_id_and_item_id"
   end
 
-  create_table "item_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "item_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "item_id"
     t.string "image", null: false
     t.text "note"
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["item_id"], name: "index_item_images_on_item_id"
   end
 
-  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "name", null: false
     t.text "body", null: false
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["user_id"], name: "index_items_on_user_id"
   end
 
-  create_table "notices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "notices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "sender_id"
     t.text "body", null: false
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["user_id", "sender_id"], name: "index_notices_on_user_id_and_sender_id"
   end
 
-  create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content"
     t.string "category", null: false
     t.bigint "user_id"
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
