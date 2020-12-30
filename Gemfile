@@ -45,6 +45,7 @@ gem 'carrierwave'
 gem 'annotate'
 gem 'react-rails'
 gem 'stripe'
+gem 'dotenv-rails'
 
 
 # 日本語化
