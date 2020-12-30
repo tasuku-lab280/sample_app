@@ -34,6 +34,7 @@ class Creditcard < ApplicationRecord
 
   # 関連
   belongs_to :user, optional: true
+  has_many :payments
 
 
   # 委譲

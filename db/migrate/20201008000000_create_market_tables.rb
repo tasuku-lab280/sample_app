@@ -39,6 +39,20 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
     end
     add_index :destinations, :user_id
 
+    # 購入
+    create_table :payments do |t|
+      t.integer     :user_id,             null: false
+      t.integer     :creditcard_id,       null: false
+      t.integer     :item_id,             null: false
+      t.string      :status,              null: false, default: :success
+      t.integer     :price,               null: false
+      t.string      :result_code
+      t.string      :error_message
+      t.text        :note
+      t.timestamps                        null: false
+    end
+    add_index :payments, %i(user_id creditcard_id item_id)
+
     # 商品
     create_table :items do |t|
       t.integer           :user_id,          null: false
@@ -113,6 +127,7 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
     end
     drop_table :creditcards
     drop_table :destinations
+    drop_table :payments
     drop_table :items
     drop_table :item_images
     drop_table :categories

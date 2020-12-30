@@ -1,5 +1,5 @@
 class Front::PaymentsController < FrontMemberController
-  layout 'front_modal'
+  layout 'front_modal', except: :finish
 
   before_action :set_item, only: [:confirm, :update]
 
@@ -14,6 +14,13 @@ class Front::PaymentsController < FrontMemberController
   end
 
   def update
+    payment = current_user.payments.create!(
+      creditcard_id: current_user.selected_creditcard_id,
+      item_id: @item.id,
+      price: @item.price,
+    )
+
+    redirect_to payments_finish_path
   end
 
   def finish

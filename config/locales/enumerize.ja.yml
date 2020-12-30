@@ -51,13 +51,16 @@ ja:
         wakayama: "和歌山県"
         undecided: "未定"
 
-    post:
-      category:
-        programming: "プログラミング"
-        university: "大学受験"
-        qualification: "資格勉強"
-        english: "英語学習"
-        reading: "読書"
+    creditcard:
+      status:
+        available: '有効'
+        unavailable: '無効'
+
+    payment:
+      status:
+        success: '成功'
+        error: '失敗'
+
     item:
       condition:
         new_unused: '新品未使用'

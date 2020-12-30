@@ -25,6 +25,7 @@ class User < ApplicationRecord
   # 関連
   has_many :destinations, dependent: :destroy
   has_many :creditcards
+  has_many :payments
   has_many :posts, dependent: :destroy
   has_many :chat_messages, dependent: :nullify
   has_many :chat_users, dependent: :nullify

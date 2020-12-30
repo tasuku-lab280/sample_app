@@ -132,6 +132,20 @@ ActiveRecord::Schema.define(version: 2020_10_08_000000) do
     t.index ["user_id", "sender_id"], name: "index_notices_on_user_id_and_sender_id"
   end
 
+  create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "creditcard_id", null: false
+    t.integer "item_id", null: false
+    t.string "status", default: "success", null: false
+    t.integer "price", null: false
+    t.string "result_code"
+    t.string "error_message"
+    t.text "note"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "creditcard_id", "item_id"], name: "index_payments_on_user_id_and_creditcard_id_and_item_id"
+  end
+
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content"
     t.string "category", null: false

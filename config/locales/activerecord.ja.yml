@@ -4,6 +4,7 @@ ja:
       user: '会員'
       creditcard: 'クレジットカード'
       destination: '配送先'
+      payment: '購入'
       post: '投稿'
       item: '商品'
       item_image: '商品画像'
@@ -48,6 +49,21 @@ ja:
         # ラベル
         user_name: '会員名'
         full_name_and_kana: '姓名・カナ'
+
+      payment:
+        id: 'ID'
+        user_id: '会員ID'
+        creditcard_id: 'クレジットカードID'
+        creditcard_id: '商品ID'
+        status: 'ステータス'
+        price: '金額'
+        result_code: '処理結果コード'
+        error_message: 'エラーメッセージ'
+        note: '備考'
+        created_at: '作成日時'
+        updated_at: '更新日時'
+        # ラベル
+        user_name: '購入者'
 
       post:
         content: '内容'

@@ -40,6 +40,7 @@ class Item < ApplicationRecord
 
   # 関連
   has_one :item_thumbnail, -> { only_thumbnail }, class_name: 'ItemImage'
+  has_one :payment
   has_many :item_images, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :item_categories, dependent: :restrict_with_error
