@@ -6,6 +6,7 @@ end
 
 USERS = 20
 CREDIT_CARDS_PER_USER = 3
+DESTINATIONS_PER_USER = 3
 CATEGORIES = 5
 ITEMS = 50
 ITEM_CATEGORIES = 50
@@ -39,6 +40,33 @@ User.all.each do |u|
   end
   CC.create!(credit_cards)
 end
+
+
+# 配送先
+D = Translatable.new(Destination)
+User.all.each do |u|
+  user_name = u.name
+  destinations = (1..DESTINATIONS_PER_USER).map do |i|
+    {
+      user_id:         u.id,
+      last_name:       "#{user_name}の#{Destination.human_attribute_name(:last_name)}",
+      first_name:      "#{user_name}の#{Destination.human_attribute_name(:first_name)}",
+      last_name_kana:  "#{user_name}の#{Destination.human_attribute_name(:last_name_kana)}",
+      first_name_kana: "#{user_name}の#{Destination.human_attribute_name(:first_name_kana)}",
+      postal_code:     7.times.inject('') { |postal| postal.to_s + rand(9).to_s },
+      prefecture:      rand(1..47),
+      address1:        "#{user_name}の#{Destination.human_attribute_name(:address1)}",
+      address2:        "#{user_name}の#{Destination.human_attribute_name(:address2)}",
+      address3:        "#{user_name}の#{Destination.human_attribute_name(:address3)}",
+      tel:             '00000000000',
+    }
+  end
+  D.create!(destinations)
+end
+User.first.update!(
+  selected_creditcard_id: Creditcard.first.id,
+  selected_destination_id: Destination.first.id, 
+)
 
 
 ## 通知

@@ -1,5 +1,13 @@
 class CreateMarketTables < ActiveRecord::Migration[6.0]
   def up
+    # 会員
+    change_table :users do |t|
+      t.integer :selected_creditcard_id,   after: :remember_created_at
+      t.integer :selected_destination_id,  after: :selected_creditcard_id
+    end
+    add_index :users, :selected_creditcard_id
+    add_index :users, :selected_destination_id
+
     # クレジットカード
     create_table :creditcards do |t|
       t.integer    :user_id,         null: false
@@ -99,6 +107,10 @@ class CreateMarketTables < ActiveRecord::Migration[6.0]
   end
 
   def down
+    change_table :users do |t|
+      t.remove :selected_creditcard_id
+      t.remove :selected_destination_id
+    end
     drop_table :creditcards
     drop_table :destinations
     drop_table :items

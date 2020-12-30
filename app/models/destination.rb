@@ -54,25 +54,19 @@ class Destination < ApplicationRecord
                                     # uniqueness: false,
                                     # format: false
   validates :last_name,             presence: true,
-                                    length: { maximum: 32, allow_blank: true },
+                                    length: { maximum: 32, allow_blank: true }
                                     # uniqueness: false
                                     # format: false
-                                    striped: true
   validates :first_name,            presence: true,
-                                    length: { maximum: 32, allow_blank: true },
+                                    length: { maximum: 32, allow_blank: true }
                                     # uniqueness: false
                                     # format: false
-                                    striped: true
   validates :last_name_kana,        presence: true,
-                                    length: { maximum: 32, allow_blank: true },
+                                    length: { maximum: 32, allow_blank: true }
                                     # uniqueness: false,
-                                    katakana: { allow_blank: true },
-                                    striped: true
   validates :first_name_kana,       presence: true,
-                                    length: { maximum: 32, allow_blank: true },
+                                    length: { maximum: 32, allow_blank: true }
                                     # uniqueness: false,
-                                    katakana: { allow_blank: true },
-                                    striped: true
   validates :postal_code,           presence: true,
                                     length: { is: 7, allow_blank: true },
                                     # uniqueness: false
@@ -82,20 +76,17 @@ class Destination < ApplicationRecord
                                     # uniqueness: false
                                     # format: false
   validates :address1,              presence: true,
-                                    length: { maximum: 255, allow_blank: true },
+                                    length: { maximum: 255, allow_blank: true }
                                     # uniqueness: false
                                     # format: false
-                                    striped: true
   validates :address2,              presence: true,
-                                    length: { maximum: 255, allow_blank: true },
+                                    length: { maximum: 255, allow_blank: true }
                                     # uniqueness: false
                                     # format: false
-                                    striped: true
   validates :address3,              # presence: false,
-                                    length: { maximum: 255, allow_blank: true },
+                                    length: { maximum: 255, allow_blank: true }
                                     # uniqueness: false
                                     # format: false
-                                    striped: true
   validates :tel,                   # presence: true,
                                     length: { in: 10..11, allow_blank: true },
                                     # uniqueness: false
@@ -116,6 +107,13 @@ class Destination < ApplicationRecord
 
 
   # メソッド
+  def full_address
+    [prefecture_text, address1, address2, address3].join(' ')
+  end
+
+  def full_name
+    [last_name, first_name].join(' ')
+  end
 
 
   # メソッド(Private)
