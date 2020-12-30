@@ -1,10 +1,37 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                      :bigint           not null, primary key
+#  email                   :string(255)      default(""), not null
+#  encrypted_password      :string(255)      default(""), not null
+#  name                    :string(255)      not null
+#  remember_created_at     :datetime
+#  reset_password_sent_at  :datetime
+#  reset_password_token    :string(255)
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  selected_creditcard_id  :integer
+#  selected_destination_id :integer
+#
+# Indexes
+#
+#  index_users_on_email                    (email) UNIQUE
+#  index_users_on_reset_password_token     (reset_password_token) UNIQUE
+#  index_users_on_selected_creditcard_id   (selected_creditcard_id)
+#  index_users_on_selected_destination_id  (selected_destination_id)
+#
 class User < ApplicationRecord
   # 関連
+  has_many :destinations, dependent: :destroy
+  has_many :creditcards
   has_many :posts, dependent: :destroy
   has_many :chat_messages, dependent: :nullify
   has_many :chat_users, dependent: :nullify
   has_many :chat_rooms, through: :chat_users
   has_many :items, dependent: :destroy
+  has_many :comments, dependent: :nullify
+  has_many :notices, dependent: :nullify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

@@ -1,12 +1,32 @@
+# == Schema Information
+#
+# Table name: categories
+#
+#  id         :bigint           not null, primary key
+#  detail     :text(65535)
+#  image      :string(255)
+#  name       :string(255)      not null
+#  note       :text(65535)
+#  seq        :integer
+#  seq_path   :string(255)      not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_categories_on_seq_path  (seq_path)
+#
 class Category < ApplicationRecord
   # モジュール
+  include Levelable
 
 
   # 定数
 
 
   # 関連
-  has_many :items
+  has_many :item_categories, dependent: :restrict_with_error
+  has_many :items, through: :item_categories
 
 
   # 委譲

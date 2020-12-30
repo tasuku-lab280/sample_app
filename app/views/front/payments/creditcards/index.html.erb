@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2 rounded p-5" style="background-color: #FFFFFF;">
+    <div class="col-md-8 offset-md-2">
+      <h2 class="text-center">支払い方法</h2>
+
+      <hr class="my-5">
+
+      <%= form_with model: current_user, url: card_update_payments_creditcards_path, method: 'patch', local: true do |f| %>
+        <% @creditcards.each do |creditcard| %>
+          <%= hidden_field_tag :item_id, @item.id %>
+          <div class="d-flex justify-content-between mb-4">
+            <div class="d-flex">
+              <div class="mr-3">
+                <% check = creditcard.id == current_user.selected_creditcard_id %>
+                <%= f.radio_button :selected_creditcard_id, creditcard.id, id: creditcard.id, checked: check %>
+              </div>
+              <div>
+                <div><%= creditcard.masked_number %></div>
+                <div>有効期限 <%= creditcard.expiration_date %></div>
+                <div><%= creditcard.brand %></div>
+              </div>
+            </div>
+            <div>
+              <%= link_to '削除する', payments_creditcard_path(creditcard, item_id: @item.id), method: :delete, class: 'btn btn-outline-danger' %>
+            </div>
+          </div>
+        <% end %>
+
+        <%= link_to '+ クレジットカードを追加', new_payments_creditcard_path(item_id: @item.id) %>
+
+        <hr class="my-5">
+
+        <%= f.submit '選択した支払い方法を使う', class: "btn btn-danger btn-block mt-4" %>
+      <% end %>
+
+      <p class="text-center mt-4"><%= link_to 'もどる', :back %></p>
+
+    </div>
+  </div>
+</div>

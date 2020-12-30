@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-between my-5">
+  <h3 class="font-weight-bold"><%= @category.name %>の商品一覧</h3>
+</div>
+<div class="row">
+  <% @items.each do |item| %>
+    <div class="col-md-3 mb-3">
+      <%= link_to item_path(item) do %>
+        <div class="card">
+          <%= image_tag item.first_image, class: 'img-thumbnail', style: 'height: 200px' do %>
+          <% end %>
+          <div class="card-body">
+            <span class="badge badge-secondary">¥<%= item.price %></span>
+            <p class="card-title text-dark"><%= item.name %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
