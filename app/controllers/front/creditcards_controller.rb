@@ -1,4 +1,4 @@
-class Front::Payments::CreditcardsController < FrontMemberController
+class Front::CreditcardsController < FrontMemberController
   layout 'front_modal'
 
   before_action :set_item
@@ -10,9 +10,6 @@ class Front::Payments::CreditcardsController < FrontMemberController
 
   def new
     @creditcard = Creditcard.new
-  end
-
-  def new
   end
 
   def create
@@ -36,7 +33,7 @@ class Front::Payments::CreditcardsController < FrontMemberController
 
     current_user.update!(selected_creditcard_id: new_card.id)
     flash[:success] = 'クレジットカードを登録しました。'
-    redirect_to payments_confirm_path
+    redirect_to payment_confirm_item_path(@item)
 
   rescue Stripe::CardError => e
     flash[:error] = e.message
@@ -46,7 +43,7 @@ class Front::Payments::CreditcardsController < FrontMemberController
   def card_update
     if current_user.update(user_params)
       flash[:success] = '選択クレジットカードを変更しました。'
-      redirect_to payments_confirm_path(item_id: @item.id)
+      redirect_to payment_confirm_item_path(@item)
     else
       flash.now[:danger] = '選択クレジットカードを変更できませんでした。'
       render :index
@@ -68,9 +65,9 @@ class Front::Payments::CreditcardsController < FrontMemberController
 
     # クレカが全て論理削除されたらクレカ新規登録画面に遷移
     if creditcards.where(deleted_at: nil).empty?
-      redirect_to new_payments_creditcard_path(item_id: @item.id)
+      redirect_to new_item_creditcard_path(@item)
     else
-      redirect_to payments_creditcard_path(item_id: @item.id)
+      redirect_to item_creditcards_path(@item)
     end
   end
 

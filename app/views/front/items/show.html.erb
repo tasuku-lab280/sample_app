@@ -57,7 +57,7 @@
     <p class="text-center font-weight-bold" style="font-size: 2.5rem;">¥<%= @item.price %></p>
 
     <div class="text-center mb-5">
-      <%= link_to '購入画面に進む', payments_confirm_path(item_id: @item.id), class: 'btn btn-danger btn-lg btn-block' %>
+      <%= link_to '購入画面に進む', payment_confirm_item_path(@item), class: 'btn btn-danger btn-lg btn-block' %>
     </div>
 
     <p><%= @item.body %></p>

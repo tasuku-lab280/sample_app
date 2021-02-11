@@ -1,4 +1,4 @@
-class Front::Payments::DestinationsController < FrontMemberController
+class Front::DestinationsController < FrontMemberController
   layout 'front_modal'
 
   before_action :set_item

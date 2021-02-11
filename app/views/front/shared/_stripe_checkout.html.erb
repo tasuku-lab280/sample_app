@@ -1,7 +1,7 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <div>
-  <%= form_with url: payments_creditcards_path(item_id: item_id), id: 'payment-form', method: :post, local: true do |f| %>
+  <%= form_with url: item_creditcards_path(@item), id: 'payment-form', method: :post, local: true do |f| %>
     <%= hidden_field_tag :token %>
 
     <div id="card-element"></div>

@@ -22,25 +22,25 @@ Rails.application.routes.draw do
 
     # 商品
     resources :items do
-      resources :comments, only: [:create, :destroy]
-    end
-
-    # 購入
-    namespace :payments do
-      get 'confirm'
-      patch 'update'
-      get 'finish'
-      resources :creditcards, only: %w(index new create destroy) do
-        collection do
-          patch 'card_update'
-        end
+      member do
+        get 'payment_confirm'
+        patch 'payment'
+        get 'payment_finish'
       end
       resources :destinations, only: %w(index new create destroy) do
         collection do
           patch 'destination_update'
         end
       end
+      resources :creditcards, only: %w(index new create destroy) do
+        collection do
+          patch 'card_update'
+        end
+      end
+      resources :comments, only: [:create, :destroy]
     end
+
+    # 購入
 
     # カテゴリ
     resources :categories, only: :show

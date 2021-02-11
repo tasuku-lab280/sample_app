@@ -5,7 +5,7 @@
 
       <hr class="my-5">
 
-      <%= form_with model: current_user, url: card_update_payments_creditcards_path, method: 'patch', local: true do |f| %>
+      <%= form_with model: current_user, url: card_update_item_creditcards_path, method: 'patch', local: true do |f| %>
         <% @creditcards.each do |creditcard| %>
           <%= hidden_field_tag :item_id, @item.id %>
           <div class="d-flex justify-content-between mb-4">
@@ -21,12 +21,12 @@
               </div>
             </div>
             <div>
-              <%= link_to '削除する', payments_creditcard_path(creditcard, item_id: @item.id), method: :delete, class: 'btn btn-outline-danger' %>
+              <%= link_to '削除する', item_creditcard_path(@item, creditcard), method: :delete, class: 'btn btn-outline-danger' %>
             </div>
           </div>
         <% end %>
 
-        <%= link_to '+ クレジットカードを追加', new_payments_creditcard_path(item_id: @item.id) %>
+        <%= link_to '+ クレジットカードを追加', new_item_creditcard_path(@item) %>
 
         <hr class="my-5">
 

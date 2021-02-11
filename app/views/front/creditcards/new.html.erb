@@ -4,8 +4,7 @@
       <h2 class="text-center">支払い方法</h2>
       <hr class="my-5">
 
-      <%= render partial: '/front/shared/stripe_checkout',
-        locals: { creditcard: @creditcard, item_id: @item.id, intent: @intent } %>
+      <%= render partial: '/front/shared/stripe_checkout' %>
 
       <p class="text-center mt-4"><%= link_to 'もどる', :back %></p>
     </div>

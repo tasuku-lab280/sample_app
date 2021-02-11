@@ -5,7 +5,7 @@
 
       <hr class="my-5">
 
-      <%= form_with model: current_user, url: destination_update_payments_destinations_path, method: 'patch', local: true do |f| %>
+      <%= form_with model: current_user, url: destination_update_item_destinations_path, method: 'patch', local: true do |f| %>
         <% @destinations.each do |destination| %>
           <%= hidden_field_tag :item_id, @item.id %>
           <div class="d-flex justify-content-between mb-4">
@@ -21,12 +21,12 @@
               </div>
             </div>
             <div>
-              <%= link_to '削除する', payments_destination_path(destination, item_id: @item.id), method: :delete, class: 'btn btn-outline-danger' %>
+              <%= link_to '削除する', item_destination_path(@item, destination), method: :delete, class: 'btn btn-outline-danger' %>
             </div>
           </div>
         <% end %>
 
-        <%= link_to '+ 配送先を追加', new_payments_destination_path(item_id: @item.id) %>
+        <%= link_to '+ 配送先を追加', new_item_destination_path(@item) %>
 
         <hr class="my-5">
 

@@ -34,10 +34,10 @@
           </div>
         </div>
         <div class="mt-3">
-          <%= link_to '変更する >', payments_creditcards_path(item_id: @item.id) %>
+          <%= link_to '変更する >', item_creditcards_path(@item) %>
         </div>
       <% else %>
-        <%= link_to '+ 登録してください', new_payments_creditcard_path(item_id: @item.id) %>
+        <%= link_to '+ 登録してください', new_item_creditcard_path(@item) %>
       <% end %>
 
       <hr class="my-5">
@@ -52,17 +52,17 @@
           </div>
         </div>
         <div class="mt-3">
-          <%= link_to '変更する >', payments_destinations_path(item_id: @item.id) %>
+          <%= link_to '変更する >', item_destinations_path(@item) %>
         </div>
       <% else %>
-        <%= link_to '+ 登録してください', new_payments_destination_path(item_id: @item.id) %>
+        <%= link_to '+ 登録してください', new_item_destination_path(@item) %>
       <% end %>
 
       <hr class="my-5">
 
       <span class="text-danger">配送先と支払い方法の入力を完了してください。</span>
 
-      <%= form_with url: payments_update_path(item_id: @item.id), method: :patch, local: true do |f| %>
+      <%= form_with url: payment_item_path(@item), method: :patch, local: true do |f| %>
         <%= f.submit '出品する', class: "btn btn-primary btn-block mt-4" %>
       <% end %>
 
