@@ -12,7 +12,35 @@ class Front::Payments::CreditcardsController < FrontMemberController
     @creditcard = Creditcard.new
   end
 
+  def new
+  end
+
   def create
+    # 顧客IDがなければ顧客オブジェクトを作成
+    if current_user.stripe_customer_id.blank?
+      res = Stripe::Customer.create
+      current_user.update!(stripe_customer_id: res.id)
+    end
+
+    # クレカオブジェクトを作成
+    res = Stripe::Customer.create_source(
+      current_user.stripe_customer_id,
+      { source: params[:token] },
+    )
+
+    new_card = current_user.creditcards.create!(
+      stripe_creditcard_id: res.id,
+      expire_date: Creditcard.parse_expire_date(res.exp_month, res.exp_year),
+      masked_number: res.last4,
+    )
+
+    current_user.update!(selected_creditcard_id: new_card.id)
+    flash[:success] = 'クレジットカードを登録しました。'
+    redirect_to payments_confirm_path
+
+  rescue Stripe::CardError => e
+    flash[:error] = e.message
+    redirect_to action: :new
   end
 
   def card_update

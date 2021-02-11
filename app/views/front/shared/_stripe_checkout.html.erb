@@ -1,0 +1,80 @@
+<script src="https://js.stripe.com/v3/"></script>
+
+<div>
+  <%= form_with url: payments_creditcards_path(item_id: item_id), id: 'payment-form', method: :post, local: true do |f| %>
+    <%= hidden_field_tag :token %>
+
+    <div id="card-element"></div>
+
+    <div class="mt-5">
+      <p id="card-error" role="alert"></p>
+      <p id="result-message" class="invisible">
+        Payment succeeded, see the result in your
+        <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+      </p>
+    </div>
+
+    <%= button_tag type: 'submit', id: 'card_btn', class: 'btn btn-danger btn-block mt-5', onclick: 'createCard()' do %>
+      <span id="button-text">登録する</span>
+    <% end %>
+  <% end %>
+</div>
+
+<script>
+var stripe = Stripe("<%= Rails.configuration.stripe[:public_key] %>");
+var elements = stripe.elements();
+var card = elements.create("card");
+var cardBtn = document.getElementById('card_btn');
+var form = document.getElementById("payment-form");
+var cardError = document.getElementById("#card-error");
+var resultMsg = document.getElementById("#result-message");
+var token = document.getElementById('token');
+
+// ボタン初期表示
+cardBtn.disabled = true;
+
+// stripeのクレカフォームをDOMに挿入
+card.mount("#card-element");
+
+// 入力に反応
+card.on("change", function (event) {
+  cardBtn.disabled = event.empty;
+  cardError.textContent = event.error ? event.error.message : "";
+});
+
+// カード登録
+function createCard(e) {
+  event.preventDefault();
+  loading(true);
+  stripe.createToken(card).then(error_handler)
+};
+
+// 処理中
+var loading = function(isLoading) {
+  if (isLoading) {
+    cardBtn.disabled = true;
+  } else {
+    cardBtn.disabled = false;
+  }
+};
+
+// エラーハンドラ
+var error_handler = function(result) {
+  if (result.error) {
+    loading(false);
+    cardError.textContent = result.error.message;
+    cardError.style.color = "red";
+  } else {
+    loading(false);
+    cardBtn.disabled = true;
+    console.log(result);
+    console.log(result.token);
+    console.log(result.token.id);
+    token.value = result.token.id;
+    // resultMsg.classList.remove("invisible");
+    // resultMsg.textContent = "成功";
+    // resultMsg.style.color = "green";
+    form.submit();
+  }
+}
+</script>

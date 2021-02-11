@@ -13,6 +13,7 @@
 #  updated_at              :datetime         not null
 #  selected_creditcard_id  :integer
 #  selected_destination_id :integer
+#  stripe_customer_id      :string(255)
 #
 # Indexes
 #

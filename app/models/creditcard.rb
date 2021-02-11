@@ -82,6 +82,11 @@ class Creditcard < ApplicationRecord
 
 
   # クラスメソッド
+  def self.parse_expire_date(exp_month, exp_year)
+    month = exp_month.
+    year = exp_year.slice(2..3)
+    return month + '/' + year
+  end
 
 
   # クラスメソッド(Private)
