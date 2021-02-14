@@ -7,7 +7,7 @@
     <div id="card-element"></div>
 
     <div class="mt-5">
-      <p id="card-error" role="alert"></p>
+      <div id="card-error" style="word-wrap:break-all;"></div>
       <p id="result-message" class="invisible">
         Payment succeeded, see the result in your
         <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
@@ -21,26 +21,35 @@
 </div>
 
 <script>
+// 変数定義
 var stripe = Stripe("<%= Rails.configuration.stripe[:public_key] %>");
 var elements = stripe.elements();
-var card = elements.create("card");
+var card = elements.create('card', {
+  hidePostalCode: true,
+  iconStyle: 'solid',
+});
 var cardBtn = document.getElementById('card_btn');
-var form = document.getElementById("payment-form");
-var cardError = document.getElementById("#card-error");
-var resultMsg = document.getElementById("#result-message");
+var form = document.getElementById('payment-form');
+var cardError = document.getElementById('card-error');
+var resultMsg = document.getElementById('result-message');
 var token = document.getElementById('token');
+
 
 // ボタン初期表示
 cardBtn.disabled = true;
 
+
 // stripeのクレカフォームをDOMに挿入
 card.mount("#card-element");
+
 
 // 入力に反応
 card.on("change", function (event) {
   cardBtn.disabled = event.empty;
   cardError.textContent = event.error ? event.error.message : "";
+  cardError.style.color = "red";
 });
+
 
 // カード登録
 function createCard(e) {
@@ -48,6 +57,7 @@ function createCard(e) {
   loading(true);
   stripe.createToken(card).then(error_handler)
 };
+
 
 // 処理中
 var loading = function(isLoading) {
@@ -58,6 +68,7 @@ var loading = function(isLoading) {
   }
 };
 
+
 // エラーハンドラ
 var error_handler = function(result) {
   if (result.error) {
@@ -67,13 +78,10 @@ var error_handler = function(result) {
   } else {
     loading(false);
     cardBtn.disabled = true;
-    console.log(result);
-    console.log(result.token);
-    console.log(result.token.id);
     token.value = result.token.id;
-    // resultMsg.classList.remove("invisible");
-    // resultMsg.textContent = "成功";
-    // resultMsg.style.color = "green";
+    resultMsg.classList.remove("invisible");
+    resultMsg.textContent = "成功";
+    resultMsg.style.color = "green";
     form.submit();
   }
 }
