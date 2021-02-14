@@ -16,13 +16,15 @@
               </div>
               <div>
                 <div><%= creditcard.masked_number %></div>
-                <div>有効期限 <%= creditcard.expiration_date %></div>
+                <div>有効期限 <%= creditcard.expire_date %></div>
                 <div><%= creditcard.brand %></div>
               </div>
             </div>
-            <div>
-              <%= link_to '削除する', item_creditcard_path(@item, creditcard), method: :delete, class: 'btn btn-outline-danger' %>
-            </div>
+            <% if creditcard.id != current_user.selected_creditcard_id %>
+              <div>
+                <%= link_to '削除する', item_creditcard_path(@item, creditcard), method: :delete, data: { confirm: 'クレジットカードを削除してよろしいですか？' }, class: 'btn btn-outline-danger' %>
+              </div>
+            <% end %>
           </div>
         <% end %>
 

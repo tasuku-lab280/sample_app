@@ -2,16 +2,17 @@
 #
 # Table name: creditcards
 #
-#  id              :bigint           not null, primary key
-#  brand           :string(255)      not null
-#  deleted_at      :datetime
-#  expiration_date :string(255)      not null
-#  masked_number   :string(255)      not null
-#  note            :text(65535)
-#  status          :string(255)      not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  user_id         :integer          not null
+#  id                   :bigint           not null, primary key
+#  brand                :string(255)      not null
+#  deleted_at           :datetime
+#  expire_date          :string(255)      not null
+#  masked_number        :string(255)      not null
+#  note                 :text(65535)
+#  status               :string(255)      not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  stripe_creditcard_id :string(255)      not null
+#  user_id              :integer          not null
 #
 # Indexes
 #
@@ -29,7 +30,7 @@ class Creditcard < ApplicationRecord
 
 
   # 定数
-  EXPIRATION_DATE_FORMAT = /\A[0-2]\d\/\d{2}\z/
+  EXPIRE_DATE_FORMAT = /\A[0-1]\d\/\d{2}\z/
 
 
   # 関連
@@ -44,7 +45,7 @@ class Creditcard < ApplicationRecord
 
 
   # フック
-  # before_destroy -> { throw :abort }
+  before_destroy :destroy?
 
 
   # バリデーション
@@ -56,15 +57,19 @@ class Creditcard < ApplicationRecord
                                       # length: { maximum: 255 },
                                       # uniqueness: false,
                                       # format: false
-  validates :brand,                   presence: true,
+  validates :stripe_creditcard_id,    presence: true
+                                      # length: { maximum: 255 },
+                                      # uniqueness: false,
+                                      # format: false
+  validates :masked_number,           presence: true,
                                       length: { maximum: 255, allow_blank: true }
                                       # uniqueness: false,
                                       # format: false
-  validates :expiration_date,         presence: true,
+  validates :expire_date,             presence: true,
                                       length: { maximum: 255, allow_blank: true },
                                       # uniqueness: false,
-                                      format: { with: EXPIRATION_DATE_FORMAT, allow_blank: true }
-  validates :masked_number,           presence: true,
+                                      format: { with: EXPIRE_DATE_FORMAT, allow_blank: true }
+  validates :brand,                   presence: true,
                                       length: { maximum: 255, allow_blank: true }
                                       # uniqueness: false,
                                       # format: false
@@ -83,8 +88,8 @@ class Creditcard < ApplicationRecord
 
   # クラスメソッド
   def self.parse_expire_date(exp_month, exp_year)
-    month = exp_month.
-    year = exp_year.slice(2..3)
+    month = sprintf("%02d", exp_month)
+    year = sprintf("%02d", exp_year % 100)
     return month + '/' + year
   end
 
@@ -94,11 +99,12 @@ class Creditcard < ApplicationRecord
 
   # メソッド
   def logical_delete
-    # ＠TODO updateとの違い
     assign_attributes(
-      status: :unavailable,
+      status: 'unavailable',
+      stripe_creditcard_id: 'deleted',
       masked_number: '*' * 16,
-      expiration_date: '01/01',
+      expire_date: '01/00',
+      brand: 'deleted',
       note: nil,
       deleted_at: Time.current,
     )
@@ -108,4 +114,12 @@ class Creditcard < ApplicationRecord
 
 
   # メソッド(Private)
+  private
+
+  def destroy?
+    if id != user.selected_creditcard_id
+      errors.add(:base, '選択クレジットカードは削除できません')
+      throw :abort
+    end
+  end
 end

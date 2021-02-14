@@ -31,11 +31,12 @@ User.all.each do |u|
   credit_cards = (1..CREDIT_CARDS_PER_USER).map do |i|
     counter += 1
     {
-      user_id:         u.id,
-      status:          Creditcard.status.values[i % 2],
-      brand:           %w(visa mastercard amex)[i % 2],
-      expiration_date: (Time.current + counter.months).strftime('%m/%y'),
-      masked_number:   i.to_s.rjust(12, rand(0..9).to_s).ljust(16, 'X'),
+      user_id:              u.id,
+      status:               Creditcard.status.values[i % 2],
+      stripe_creditcard_id: SecureRandom.base64,
+      masked_number:        i.to_s.rjust(12, rand(0..9).to_s).ljust(16, 'X'),
+      expire_date:          (Time.current + counter.months).strftime('%m/%y'),
+      brand:                %w(visa mastercard amex)[i % 2],
     }
   end
   CC.create!(credit_cards)

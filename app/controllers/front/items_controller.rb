@@ -48,13 +48,36 @@ class Front::ItemsController < FrontController
   end
 
   def payment
+    if current_user.selected_creditcard.status == 'unavailable'
+      flash[:danger] = '無効なクレジットカードです。'
+      render :payment_confirm
+      return
+    end
+
     payment = current_user.payments.create!(
       creditcard_id: current_user.selected_creditcard_id,
       item_id: @item.id,
       price: @item.price,
     )
 
-    redirect_to payments_finish_path
+    # stripeに課金
+    res = Stripe::Charge.create({
+      amount: @item.price,
+      currency: "jpy",
+      customer: current_user.stripe_customer_id,
+      source: current_user.selected_creditcard.stripe_creditcard_id,
+    })
+
+    redirect_to payment_finish_item_path(@item)
+
+  rescue Stripe::CardError => e
+    payment.update!(
+      status: 'error',
+      result_code: '',
+      error_message: '',
+    )
+    flash[:danger] = e.message
+    render :payment_confirm
   end
 
   def payment_finish

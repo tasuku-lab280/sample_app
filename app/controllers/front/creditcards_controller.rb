@@ -26,9 +26,11 @@ class Front::CreditcardsController < FrontMemberController
     )
 
     new_card = current_user.creditcards.create!(
+      status: 'available',
       stripe_creditcard_id: res.id,
+      masked_number: ('*' * 12) + res.last4,
       expire_date: Creditcard.parse_expire_date(res.exp_month, res.exp_year),
-      masked_number: res.last4,
+      brand: res.brand,
     )
 
     current_user.update!(selected_creditcard_id: new_card.id)
@@ -36,7 +38,7 @@ class Front::CreditcardsController < FrontMemberController
     redirect_to payment_confirm_item_path(@item)
 
   rescue Stripe::CardError => e
-    flash[:error] = e.message
+    flash[:danger] = e.message
     redirect_to action: :new
   end
 
@@ -54,6 +56,13 @@ class Front::CreditcardsController < FrontMemberController
     creditcards = current_user.creditcards.without_deleted
     creditcard = creditcards.find(params[:id])
 
+    # クレカオブジェクトを削除
+    res = Stripe::Customer.delete_source(
+      current_user.stripe_customer_id,
+      creditcard.stripe_creditcard_id,
+    )
+
+    # クレカを論理削除
     if creditcard.logical_delete
       if current_user.selected_creditcard_id == creditcard.id
         current_user.update!(selected_creditcard_id: nil)
@@ -69,6 +78,10 @@ class Front::CreditcardsController < FrontMemberController
     else
       redirect_to item_creditcards_path(@item)
     end
+
+  rescue Stripe::CardError => e
+    flash[:danger] = e.message
+    redirect_to action: :index
   end
 
   private
@@ -76,7 +89,6 @@ class Front::CreditcardsController < FrontMemberController
   def user_params
     params.require(:user).permit(:selected_creditcard_id)
   end
-
 
   def set_item
     @item = Item.find(params[:item_id])

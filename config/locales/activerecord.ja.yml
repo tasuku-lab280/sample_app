@@ -20,9 +20,10 @@ ja:
         id: ID
         user_id: '会員ID'
         status: 'ステータス'
-        brand: 'ブランド'
-        expiration_date: '有効期限'
+        stripe_creditcard_id: 'ストライプクレジットカードID'
         masked_number: '伏字番号'
+        expire_date: '有効期限'
+        brand: 'ブランド'
         note: '備考'
         deleted_at: '削除日時'
         created_at: '作成日時'

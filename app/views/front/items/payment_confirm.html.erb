@@ -29,7 +29,7 @@
         <div>
           <div>
             <div><%= @selected_creditcard.masked_number %></div>
-            <div>有効期限 <%= @selected_creditcard.expiration_date %></div>
+            <div>有効期限 <%= @selected_creditcard.expire_date %></div>
             <div><%= @selected_creditcard.brand %></div>
           </div>
         </div>
@@ -60,7 +60,9 @@
 
       <hr class="my-5">
 
-      <span class="text-danger">配送先と支払い方法の入力を完了してください。</span>
+      <% if !current_user.selected_creditcard_id || !current_user.selected_destination_id %>
+        <span class="text-danger">配送先と支払い方法の入力を完了してください。</span>
+      <% end %>
 
       <%= form_with url: payment_item_path(@item), method: :patch, local: true do |f| %>
         <%= f.submit '出品する', class: "btn btn-primary btn-block mt-4" %>

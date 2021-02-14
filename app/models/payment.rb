@@ -60,6 +60,10 @@ class Payment < ApplicationRecord
                                  # length: { maximum: 255 }
                                  # uniqueness: { scope: :group_id }
                                  # format: false
+  validates :item_id,            presence: true
+                                 # length: { maximum: 255 }
+                                 # uniqueness: { scope: :group_id }
+                                 # format: false
   validates :status,             presence: true
                                  # length: { maximum: 255 }
                                  # uniqueness: { scope: :group_id }

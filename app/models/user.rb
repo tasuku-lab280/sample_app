@@ -23,7 +23,14 @@
 #  index_users_on_selected_destination_id  (selected_destination_id)
 #
 class User < ApplicationRecord
+  # モジュール
+
+
+  # 定数
+
+
   # 関連
+  belongs_to :selected_creditcard, optional: true, class_name: 'Creditcard'
   has_many :destinations, dependent: :destroy
   has_many :creditcards
   has_many :payments
@@ -43,8 +50,29 @@ class User < ApplicationRecord
                     length: { maximum: 30 }
 
 
+  # 委譲
+  
+  
   # スコープ
   scope :where_category, ->(category) { where(posts: { category: category }) }
+
+
+  # バリデーション
+  # validates :selected_creditcard_id,      presence: false
+                                          # length: false
+                                          # uniqueness: false
+                                          # format: false
+  # validates :selected_destination_id,     presence: false
+                                          # length: false
+                                          # uniqueness: false
+                                          # format: false
+  # validates :stripe_customer_id,          presence: false
+                                          # length: false
+                                          # uniqueness: false
+                                          # format: false
+
+
+  # フック
 
 
   # メソッド
