@@ -4,14 +4,30 @@
   <%= form_with url: item_creditcards_path(@item), id: 'payment-form', method: :post, local: true do |f| %>
     <%= hidden_field_tag :token %>
 
-    <div id="card-element"></div>
+    <div class="mb-5">
+      <label for="card-number-element">カード番号</label>
+      <span class="badge badge-danger">必須</span>
+      <div id="card-number-element"></div>
+      <div id="cardNumber-error" class="mt-2"></div>
+    </div>
+
+    <div class="mb-5">
+      <label for="card-expiry-element">有効期限</label>
+      <span class="badge badge-danger">必須</span>
+      <div id="card-expiry-element"></div>
+      <div id="cardExpiry-error" class="mt-2"></div>
+    </div>
+
+    <div class="mb-5">
+      <label for="card-cvc-element">セキュリティーコード</label>
+      <span class="badge badge-danger">必須</span>
+      <div id="card-cvc-element"></div>
+      <div id="cardCvc-error" class="mt-2"></div>
+    </div>
 
     <div class="mt-5">
       <div id="card-error" style="word-wrap:break-all;"></div>
-      <p id="result-message" class="invisible">
-        Payment succeeded, see the result in your
-        <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
-      </p>
+      <div id="result-message" style="word-wrap:break-all;"></div>
     </div>
 
     <%= button_tag type: 'submit', id: 'card_btn', class: 'btn btn-danger btn-block mt-5', onclick: 'createCard()' do %>
@@ -24,9 +40,15 @@
 // 変数定義
 var stripe = Stripe("<%= Rails.configuration.stripe[:public_key] %>");
 var elements = stripe.elements();
-var card = elements.create('card', {
-  hidePostalCode: true,
-  iconStyle: 'solid',
+var cardNumberElement = elements.create('cardNumber', {
+  showIcon: true,
+  placeholder: '例）1234 5678 9012 3456'
+});
+var cardExpiryElement = elements.create('cardExpiry', {
+  placeholder: '01 / 20'
+});
+var cardCvcElement = elements.create('cardCvc', {
+  placeholder: '123'
 });
 var cardBtn = document.getElementById('card_btn');
 var form = document.getElementById('payment-form');
@@ -40,22 +62,35 @@ cardBtn.disabled = true;
 
 
 // stripeのクレカフォームをDOMに挿入
-card.mount("#card-element");
+cardNumberElement.mount('#card-number-element');
+cardExpiryElement.mount('#card-expiry-element');
+cardCvcElement.mount('#card-cvc-element');
+
+
+// フォームバリデータ
+var formValidator = function(event) {
+  var errorContainer = document.getElementById(event.elementType + "-error")
+  if (event.error) {
+    errorContainer.textContent = event.error.message;
+    errorContainer.style.color = "red"
+  } else {
+    errorContainer.textContent = ""
+    cardBtn.disabled = event.empty;
+  }
+}
 
 
 // 入力に反応
-card.on("change", function (event) {
-  cardBtn.disabled = event.empty;
-  cardError.textContent = event.error ? event.error.message : "";
-  cardError.style.color = "red";
-});
+cardNumberElement.on('change', formValidator);
+cardCvcElement.on('change', formValidator);
+cardExpiryElement.on('change', formValidator);
 
 
 // カード登録
 function createCard(e) {
   event.preventDefault();
   loading(true);
-  stripe.createToken(card).then(error_handler)
+  stripe.createToken(cardNumberElement).then(error_handler)
 };
 
 
@@ -79,7 +114,6 @@ var error_handler = function(result) {
     loading(false);
     cardBtn.disabled = true;
     token.value = result.token.id;
-    resultMsg.classList.remove("invisible");
     resultMsg.textContent = "成功";
     resultMsg.style.color = "green";
     form.submit();
