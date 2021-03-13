@@ -32,9 +32,9 @@ class Item < ApplicationRecord
 
   # 定数
   FRONT_ORDERS = {
-    'price_asc' => { selling_price: :asc },
-    'price_desc' => { selling_price: :desc },
-    'created_at_desc' => { released_at: :desc },
+    'price_asc' => { price: :asc },
+    'price_desc' => { price: :desc },
+    'created_at_desc' => { created_at: :desc },
   }
 
 

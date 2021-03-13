@@ -2,8 +2,6 @@
 
   <%= form_with url: items_path, method: "get", class: 'form-group', local: true do |f| %>
     <%= hidden_field_tag(:sort_order, params[:sort_order], id: 'item-order') %>
-    <%= hidden_field_tag(:min_price, params[:min_price]) %>
-    <%= hidden_field_tag(:max_price, params[:max_price]) %>
 
     <%# 並び替え %>
     <%
@@ -19,7 +17,7 @@
       <%# キーワード %>
       <div class="form-group">
         <span class="font-weight-bold small">キーワードを追加する</span>
-        <%= f.text_field :keyword, value: params[:keyword], placeholder: '例）値下げ',class: 'form-control' %>
+        <%= f.text_field :keywords, value: params[:keywords], placeholder: '例）値下げ', class: 'form-control' %>
       </div>
       <%# END キーワード %>
 
@@ -47,7 +45,7 @@
       </div>
       <%# END サイズ %>
 
-      <%# @TODO 価格 %>
+      <%# 価格 %>
       <span class="font-weight-bold small">価格</span>
       <div class="d-flex">
         <div>
@@ -119,7 +117,5 @@
       <%= f.submit '適用', class: "btn btn-primary" %>
       <%= f.button 'クリア', type: :reset, class: 'btn btn-secondary' %>
     </div>
-
   <% end %>
-
 </div>

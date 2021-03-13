@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg ">
       <%= link_to 'フリマアプリ', root_path, class: 'navbar-brand text-dark font-weight-bold' %>
       <%= form_with url: items_path, method: "get", class: 'form-group m-0', local: true do |f| %>
-        <%= f.text_field :keyword, value: params[:keyword], placeholder: '何かお探しですか？', class: 'form-control form-control-sm', style: 'width: 950px' %>
+        <%= f.text_field :keywords, value: params[:keywords], placeholder: '何かお探しですか？', class: 'form-control form-control-sm', style: 'width: 950px' %>
       <% end %>
     </nav>
     <nav class="navbar navbar-expand-lg p-0">

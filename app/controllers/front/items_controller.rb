@@ -1,4 +1,5 @@
 class Front::ItemsController < FrontController
+  # レイアウト
   layout 'front_modal', only: :payment_confirm
 
 
@@ -16,8 +17,10 @@ class Front::ItemsController < FrontController
 
   # メソッド
   def index
-    one = search_items
-    @items = one.page(params[:page]).per(params[:per_page] || INDEX_PER_ITEMS)
+    @category = Category.find_by(id: params[:category_id])
+    @item_searcher = Item::Searcher.new(item_searcher_params)
+    order = Item::FRONT_ORDERS[params[:item_order]] || { created_at: :desc }
+    @items = @item_searcher.search.order(order).page(params[:page]).per(params[:per_page] || INDEX_PER_ITEMS)
   end
 
   def new
@@ -87,30 +90,6 @@ class Front::ItemsController < FrontController
   # メソッド(Private)
   private
 
-  def search_items
-    one = Item.all
-    
-    # 絞込
-    one = one.where('items.name LIKE ?', '%' + params[:keyword] + '%') if params[:keyword].present?
-    one = one.joins(:item_categories).where(item_categories: { category_id: @category.descendants }) if params[:category_id].present?
-    if params[:min_price].present?
-      one = one.where('items.price >= ?', params[:min_price])
-    end
-    if params[:max_price].present?
-      one = one.where('items.price <= ?', params[:max_price])
-    end
-    one = one.where(condition: params[:condition]) if params[:condition].present?
-    one = one.where(delivery_fee: params[:delivery_fee]) if params[:delivery_fee].present?
-    one = one.where(sales_status: params[:sales_status]) if params[:sales_status].present?
-
-    # ソート
-    one = one.order(created_at: :desc) if params[:sort_order] == 'created_desc'
-    one = one.order(price: :asc) if params[:sort_order] == 'price_asc'
-    one = one.order(price: :desc) if params[:sort_order] == 'price_desc'
-
-    one
-  end
-
   def item_params
     params.require(:item).permit(*PERMITTED_ATTRIBUTES, item_images_attributes: [:id, :item_id, :image])
   end
@@ -121,5 +100,9 @@ class Front::ItemsController < FrontController
 
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def item_searcher_params
+    params.permit(Item::Searcher::STRONG_PARAMETER)
   end
 end
