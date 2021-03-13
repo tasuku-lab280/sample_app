@@ -1,0 +1,15 @@
+<ol class="breadcrumb mt-3">
+  <li class="breadcrumb-item"><%= link_to 'ホーム', admin_root_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">カテゴリ一覧</li>
+</ol>
+
+<%= render 'search_form' %>
+
+<%#= link_to "一覧をダウンロード", admin_items_path(format: :csv), class: "btn btn-success mt-3" %>
+<%= link_to 'カテゴリ順番変更', order_edit_admin_categories_path, class: "btn btn-success mt-3" %>
+
+<%= render 'table' %>
+
+<!-- paginate -->
+<%= paginate @categories %>
+<!-- end paginate -->

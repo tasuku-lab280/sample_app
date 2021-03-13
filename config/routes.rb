@@ -56,6 +56,11 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'homes#index'
     resources :items
+    resources :categories do
+      collection do
+        get 'order_edit'
+      end
+    end
   end
 
   # api

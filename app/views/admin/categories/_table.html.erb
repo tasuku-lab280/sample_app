@@ -1,0 +1,24 @@
+<table class="table table-bordered mt-3">
+  <thead>
+    <tr>
+      <th scope="col"><%= Category.human_attribute_name :id %></th>
+      <th scope="col"><%= Category.human_attribute_name :name %></th>
+      <th scope="col"><%= Category.human_attribute_name :seq %></th>
+      <th scope="col"><%= Category.human_attribute_name :seq_path %></th>
+      <th scope="col"><%= Category.human_attribute_name :created_at %></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <th scope="row"><%= category.id %></th>
+        <th scope="row"><%= category.name %></th>
+        <th scope="row"><%= category.seq %></th>
+        <th scope="row"><%= category.seq_path %></th>
+        <th scope="row"><%= category.created_at.strftime('%Y/%m/%d %H:%M:%S') %></th>
+        <th scope="row"><%= link_to '詳細', '#', class: 'btn btn-primary btn-sm' %></th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
