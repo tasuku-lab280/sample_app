@@ -25,27 +25,43 @@ module Category::Levelable
 
       def descendants_of(node)
         node = to_node(node)
-        where(arel_table[:seq_path].matches("#{node.seq_path}%"))
+        subtree_of(node).where.not(id: node)
       end
 
       def subtree_of(node)
         node = to_node(node)
-        descendants_of(node).or(arel_table[:id].eq(node.id))
+        where(arel_table[:seq_path].matches("#{node.seq_path}%"))
       end
 
       def level(level) # root(/)からの深さ指定(Model.level(0)は常に[])
-        arel_length = ->(args) { Arel::Nodes::NamedFunction.new('LENGTH', args) }
-        arel_replace = ->(args) { Arel::Nodes::NamedFunction.new('REPLACE', args) }
+        where(_arel_seq_path_depth.eq(level))
+      end
 
-        seq_without_delimiter = arel_replace.call([arel_table[:seq_path], Arel.sql("'#{DELIMITER}'"), Arel.sql("''")])
-        depth = Arel::Nodes::InfixOperation.new(
-          '-', arel_length.call([arel_table[:seq_path]]), arel_length.call([seq_without_delimiter])
-        )
-        where(depth.eq(level + 1))
+      def order_by_int_seq_path(dest = :asc) # `seq_path`の数字順ソート
+        return current_scope unless (max_depth = maximum(_arel_seq_path_depth))
+
+        arel_substring_index = ->(former, latter, index) do
+          Arel::Nodes::NamedFunction.new('SUBSTRING_INDEX', [former, latter, index])
+        end
+
+        order_clms = Array.new(max_depth) do |i|
+          one = Arel::Nodes::Case
+                  .new
+                  .when(arel_table[:seq_path].matches("#{DELIMITER}%"))
+                  .then(
+                    arel_substring_index.call(
+                      arel_substring_index.call(arel_table[:seq_path], Arel.sql("'#{DELIMITER}'"), i + 2),
+                      Arel.sql("'#{DELIMITER}'"),
+                      -1
+                    )
+                  ).else(-1)
+          Arel::Nodes::InfixOperation.new('+', one, 0) # Int型変換
+        end
+        order_clms.inject(current_scope || all) { |result, clm| result.order(clm.send(dest)) }
       end
 
       def order_tree
-        order(seq_path: :asc)
+        order_by_int_seq_path(:asc)
       end
 
 
@@ -57,10 +73,71 @@ module Category::Levelable
         else raise ArgumentError, "非対応のクラス(obj: #{obj.class})"
         end
       end
+
+      #
+      # レシーバのスコープ内で祖先を持たないノード
+      # a/b/c
+      # a/d/
+      # Levelable.where(seq: [b, c, d]).roots_in_current_scope
+      # #=> [b, d]
+      #
+      def roots_in_current_scope
+        return all.send(__method__) unless current_scope
+
+        table_alias = arel_table.alias
+        condition = arel_table[:seq_path]
+                      .matches(Arel::Nodes::NamedFunction.new('CONCAT', [table_alias[:seq_path], Arel.sql("'%'")]))
+                      .and(arel_table[:id].not_eq(table_alias[:id]))
+        subquery =  unscoped
+                      .select(1)
+                      .from(current_scope.select(arel_table[:id], arel_table[:seq_path]), table_alias.name)
+                      .where(condition)
+                      .arel
+        where.not(subquery.exists)
+      end
+
+      #
+      # レシーバのスコープ内で子孫を持たないノード
+      # a/b/c
+      # a/d/
+      # Levelable.where(seq: [a, b, d]).leaves_in_current_scope
+      # #=> [b, d]
+      #
+      def leaves_in_current_scope
+        return all.send(__method__) unless current_scope
+
+        table_alias = arel_table.alias
+        condition = table_alias[:seq_path]
+                      .matches(Arel::Nodes::NamedFunction.new('CONCAT', [arel_table[:seq_path], Arel.sql("'%'")]))
+                      .and(table_alias[:id].not_eq(arel_table[:id]))
+        subquery = unscoped
+                     .select(1)
+                     .from(current_scope.select(arel_table[:id], arel_table[:seq_path]), table_alias.name)
+                     .where(condition)
+                     .arel
+        where.not(subquery.exists)
+      end
+
+
+      # クラスメソッド(private)
+      private
+
+      def _arel_seq_path_depth
+        arel_length = ->(args) { Arel::Nodes::NamedFunction.new('LENGTH', args) }
+        arel_subtraction = ->(former, latter) { Arel::Nodes::InfixOperation.new('-', former, latter) }
+
+        seq_without_delim = Arel::Nodes::NamedFunction.new(
+          'REPLACE', [arel_table[:seq_path], Arel.sql("'#{DELIMITER}'"), Arel.sql("''")]
+        )
+        one = arel_subtraction.call(arel_length.call([arel_table[:seq_path]]), arel_length.call([seq_without_delim]))
+        arel_subtraction.call(one, 1)
+      end
     end
 
 
-    # Ancestors
+    # Ancestors(自身の祖先一覧)
+    # a/b/c
+    # c.ancestors == [a, b]
     def ancestors
       return self.class.none unless has_parent?
       self.class.ancestors_of(self)
@@ -76,7 +153,9 @@ module Category::Levelable
     end
 
 
-    # Parent
+    # Parent(自身を直接の子として持つ親)
+    # a/b/c
+    # c.parent == b
     def parent
       self.class.find_by_seq_path(parent_seq_path) if has_parent?
     end
@@ -94,7 +173,10 @@ module Category::Levelable
     end
 
 
-    # Children
+    # Children(自身を直接の親とする子)
+    # a/b/c
+    # a/e/
+    # a.children == [b, e]
     def children
       self.class.children_of(self)
     end
@@ -112,7 +194,11 @@ module Category::Levelable
     end
 
 
-    # Siblings
+    # Siblings(自身と同じ親を持つ兄弟)
+    # a/b/c
+    # a/e/
+    # b.siblings == [b, e]
+    # b.siblings(include_self: false) == [e]
     def siblings(include_self: true)
       scope = self.class.siblings_of(self)
       include_self ? scope : scope.where.not(id: id)
@@ -135,9 +221,23 @@ module Category::Levelable
     end
 
 
-    # Descendants
+    # Descendants(子孫一覧)
+    # a/b/c
+    # a/e/
+    # a.descendants == [b, c, e]
     def descendants
       self.class.descendants_of(self).order_tree
+    end
+
+    def descendants_in_database
+      return self.class.none if new_record?
+      return descendants unless seq_path_changed?
+
+      self.class.find(id).descendants
+    end
+
+    def descendants_in_database_seq_paths
+      descendants_in_database.pluck(:seq_path)
     end
 
     def has_descendants?
@@ -149,7 +249,10 @@ module Category::Levelable
     end
 
 
-    # Subtree
+    # Subtree(自身をルートとする部分木)
+    # a/b/c
+    # a/b/d
+    # b.subtree == [b, c, d]
     def subtree
       self.class.subtree_of(self).order_tree
     end

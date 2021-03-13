@@ -24,7 +24,7 @@
       <%# カテゴリ %>
       <div class="form-group mt-4">
         <span class="font-weight-bold small">カテゴリを選択する</span>
-        <% categories_options = options_from_collection_for_select(root_categories, :id, :name, params[:category_id]) %>
+        <% categories_options = options_from_collection_for_select(Category.order_tree, :id, :leveled_name, params[:category_id]) %>
         <%= f.select :category_id, categories_options, { include_blank: 'すべて' }, class: 'form-control' %>
       </div>
       <%# END カテゴリ %>

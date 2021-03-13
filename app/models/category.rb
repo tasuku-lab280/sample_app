@@ -59,6 +59,10 @@ class Category < ApplicationRecord
 
 
   # メソッド
+  def leveled_name(padding: '&nbsp;'*2)
+    text = padding * (level - 1) + name
+    ActionController::Base.helpers.raw(text)
+  end
 
 
   # メソッド(Private)

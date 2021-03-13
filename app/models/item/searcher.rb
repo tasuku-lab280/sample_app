@@ -84,7 +84,7 @@ class Item
       return Item.none unless valid?
 
       one = Item.all
-      # one = filter_by_category_id(one) if category_id?
+      one = filter_by_category_id(one) if category_id?
       one = filter_by_keywords(one) if keywords?
       one = filter_by_prices(one) if min_or_max_prices?
       one = one.where(condition: condition) if condition.present?
