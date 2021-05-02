@@ -9,7 +9,7 @@ class Article
 
 
     # アクセサ
-    ATTRIBUTES = %w(keywords category_id)
+    ATTRIBUTES = %w(format keywords category_id)
     attr_accessor(*ATTRIBUTES)
 
 

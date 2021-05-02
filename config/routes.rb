@@ -52,6 +52,11 @@ Rails.application.routes.draw do
     end
 
     resources :articles, only: %w(index show)
+
+    # API
+    namespace :api, { format: 'json' } do
+      resources :articles, only: :index
+    end
   end
 
   # 管理画面
