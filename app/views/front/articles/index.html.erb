@@ -1,0 +1,15 @@
+<%# 検索フォーム %>
+<%= form_with url: articles_path, method: "get", class: 'form-group', local: true do %>
+  <%= text_field_tag :keywords, params[:keywords], placeholder: '記事を検索する', class: 'form-control mt-5' %>
+<% end %>
+<%# END 検索フォーム %>
+
+<%# 記事一覧 %>
+<div class="row p-md-5">
+  <%= render @articles %>
+</div>
+<%# END 記事一覧 %>
+
+<%# ページネーション %>
+<%= paginate @articles %>
+<%# END ページネーション %>

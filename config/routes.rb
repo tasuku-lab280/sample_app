@@ -50,6 +50,8 @@ Rails.application.routes.draw do
     namespace :settings do
       resources :notices, only: :index
     end
+
+    resources :articles, only: %w(index show)
   end
 
   # 管理画面

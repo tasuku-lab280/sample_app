@@ -135,4 +135,19 @@ item_categories = Item.all.map do |item|
 end
 ItemCategory.create!(item_categories)
 
+
+# 記事
+COUNT = 50
+USER_IDS = [1, 2, 3]
+results = Array.new(COUNT) do |i|
+  num = i + 1
+  {
+    user_id: USER_IDS[i % 3],
+    status: Article.status.values[i % 3],
+    title: "サンプルタイトル#{num}",
+    body: "サンプル本文#{num}",
+  }
+end
+Article.create!(results)
+
 puts '初期データの追加が完了しました！'
