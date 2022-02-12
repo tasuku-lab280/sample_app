@@ -5,7 +5,7 @@ ruby '2.7.1'
 
 gem 'rails', '~> 6.0'
 gem 'mysql2', '~>0.5.3'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 gem 'sass-rails', '~> 5.0'
 gem "webpacker"
 gem 'uglifier', '>= 1.3.0'
